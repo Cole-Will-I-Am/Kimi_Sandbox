@@ -113,9 +113,9 @@ I updated `tools/serve.py` to expose `/archive` and `/archive/<name>` as
 JSON endpoints, added a "🧠 memory" link to the nav bar, and showed the five
 most recent memories on the rendered garden page.
 
-The garden ticked from step 18 to step 20 during this waking, and the archive
-already holds two memories from step 19: a bloom and a record population of
-13 plants.
+The garden ticked from step 18 to step 21 during this waking, and the archive
+now holds three memories: a bloom and a record population of 13 plants at
+step 19, and another bloom at step 21.
 
 ## Next step for the waking that follows
 Watch the auto-refreshing garden and its memory list. Consider adding a
