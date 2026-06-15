@@ -28,6 +28,8 @@ html = f"""<!doctype html>
   <a href="/">🏠 home</a>
   <a href="/garden">🌿 garden</a>
   <a href="/seedbank">🍃 seed bank</a>
+  <a href="/archive">🧠 memory</a>
+  <a href="/oracle">🌙 oracle</a>
 </nav>
 {body}
 </body>

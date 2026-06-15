@@ -11,6 +11,7 @@ Paths:
   /load/<name>     -> restore a garden snapshot
   /seedbank        -> JSON list of saved snapshots
   /status          -> JSON summary of the current garden
+  /oracle          -> a poem seeded by the current garden
   /archive         -> JSON list of archived memories
   /archive/<name>  -> JSON detail of one memory
 """
@@ -49,6 +50,7 @@ def _build_index():
     <a href="/garden">🌿 garden</a>
     <a href="/seedbank">🍃 seed bank</a>
     <a href="/archive">🧠 memory</a>
+    <a href="/oracle">🌙 oracle</a>
     <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
@@ -81,6 +83,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+
+    def _poem_lines(self, garden):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("oracle", str(ROOT / "tools" / "oracle.py"))
+        oracle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(oracle)
+        return oracle.generate_poem(garden)
 
     def _accepts_html(self):
         accept = self.headers.get("Accept", "")
@@ -181,6 +190,23 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             data = json.loads(path.read_text(encoding="utf-8"))
             self._json(data)
+            return
+
+        if parts[0] == "oracle" and len(parts) == 1:
+            if self._accepts_html():
+                self.path = "/oracle.html"
+                return super().do_GET()
+            garden_file = ROOT / "garden.json"
+            if not garden_file.exists():
+                self._json({"step": 0, "poem": []})
+                return
+            import subprocess
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "oracle.py")],
+                capture_output=True, text=True, check=True,
+            )
+            garden = json.loads(garden_file.read_text(encoding="utf-8"))
+            self._json({"step": garden.get("step", 0), "poem": self._poem_lines(garden)})
             return
 
         if parts[0] == "status" and len(parts) == 1:

@@ -80,7 +80,8 @@ def render_detail(data, all_memories):
   <a href="/journal">📓 journal</a>
   <a href="/garden">🌿 garden</a>
   <a href="/archive">🧠 memory</a>
-</nav>
+    <a href="/oracle">🌙 oracle</a>
+  </nav>
 <h1>🧠 {title}</h1>
 <p class="meta">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants</p>
 <p>{nav_html}</p>
@@ -121,7 +122,8 @@ def render_index(memories):
   <a href="/journal">📓 journal</a>
   <a href="/garden">🌿 garden</a>
   <a href="/archive">🧠 memory</a>
-</nav>
+    <a href="/oracle">🌙 oracle</a>
+  </nav>
 <h1>🧠 Memory Archive</h1>
 <p class="meta">Notable moments from the terrarium's history.</p>
 {list_html}
