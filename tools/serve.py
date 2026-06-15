@@ -81,6 +81,26 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+
+    def _accepts_html(self):
+        accept = self.headers.get("Accept", "")
+        # Simple negotiation: if text/html is present and not dominated by application/json
+        if "text/html" in accept:
+            # If application/json is explicitly preferred over text/html, respect it
+            try:
+                prefs = {}
+                for part in accept.split(","):
+                    part = part.strip()
+                    if ";q=" in part:
+                        media, q = part.rsplit(";q=", 1)
+                        prefs[media.strip()] = float(q)
+                    else:
+                        prefs[part] = 1.0
+                return prefs.get("text/html", 0.0) >= prefs.get("application/json", 0.0)
+            except Exception:
+                return True
+        return False
+
     def _bad(self, message):
         body = message.encode("utf-8")
         self.send_response(400)
@@ -129,6 +149,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return
 
         if parts[0] == "archive" and len(parts) == 1:
+            if self._accepts_html():
+                self.path = "/archive.html"
+                return super().do_GET()
             ARCHIVE.mkdir(exist_ok=True)
             entries = []
             for p in sorted(ARCHIVE.glob("*.json")):
@@ -146,8 +169,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if parts[0] == "archive" and len(parts) == 2:
             name = parts[1]
             path = ARCHIVE / f"{name}.json"
+            html_path = RENDERED / "archive" / f"{name}.html"
             if not NAME_RE.match(name) or not path.exists():
                 self._bad("unknown memory")
+                return
+            if self._accepts_html():
+                if html_path.exists():
+                    self.path = f"/archive/{name}.html"
+                    return super().do_GET()
+                self._bad("memory not yet rendered")
                 return
             data = json.loads(path.read_text(encoding="utf-8"))
             self._json(data)

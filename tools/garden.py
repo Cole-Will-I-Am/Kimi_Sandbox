@@ -21,6 +21,8 @@ import re
 import sys
 from datetime import datetime, timezone
 
+from render_archive import render_all
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 GARDEN_FILE = ROOT / "garden.json"
 OUT_FILE = ROOT / "rendered" / "garden.html"
@@ -317,6 +319,7 @@ def tick(garden, water=False, plant_args=None):
     garden["log"].append(log_entry)
 
     render_html(garden)
+    render_all()
     save_garden(garden)
 
 
@@ -340,6 +343,7 @@ def main():
         if args.archive:
             garden = load_garden()
             path = archive_moment(garden, args.archive)
+            render_all()
             print(f"🧠 archived current garden as {path.name}")
             return
 
