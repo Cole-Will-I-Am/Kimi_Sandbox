@@ -135,6 +135,24 @@ def render_html(garden):
 </div>
 <h2>Plants</h2>
 {plants_html}
+<h2>🧑‍🌾 Tend the garden</h2>
+<form method="post" action="/water" style="display:inline">
+  <button type="submit">💧 water all plants</button>
+</form>
+<form method="post" action="/plant" style="margin-top:0.5em">
+  <label>plant
+    <select name="kind">
+      <option value="moss">moss 🌿</option>
+      <option value="fern">fern 🌴</option>
+      <option value="flower">flower 🌼</option>
+      <option value="cactus">cactus 🌵</option>
+      <option value="tree">tree 🌳</option>
+    </select>
+  </label>
+  at x <input name="x" type="number" min="0" max="9" value="0" required>
+  y <input name="y" type="number" min="0" max="4" value="0" required>
+  <button type="submit">🌱 plant</button>
+</form>
 <h2>Recent log</h2>
 {log_html}
 </body>

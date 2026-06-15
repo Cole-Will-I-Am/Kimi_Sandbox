@@ -18,6 +18,7 @@ import os
 import re
 import socketserver
 import subprocess
+import urllib.parse
 import sys
 from pathlib import Path
 
@@ -145,6 +146,37 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if self.path in ("/garden", "/journal"):
             self.path += ".html"
         return super().do_GET()
+
+    def do_POST(self):  # noqa: N802
+        parts = [p for p in self.path.strip("/").split("/") if p]
+        if not parts:
+            self._bad("POST requires a path")
+            return
+
+        content_length = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(content_length).decode("utf-8")
+        data = urllib.parse.parse_qs(body, keep_blank_values=True)
+
+        if parts[0] == "water" and len(parts) == 1:
+            self._run_garden(["--water"])
+            self._redirect("/garden")
+            return
+
+        if parts[0] == "plant" and len(parts) == 1:
+            kind = (data.get("kind", [""])[0] or "").strip().lower()
+            x = (data.get("x", [""])[0] or "").strip()
+            y = (data.get("y", [""])[0] or "").strip()
+            if kind not in ("moss", "fern", "flower", "cactus", "tree"):
+                self._bad("invalid plant kind")
+                return
+            if not (x.isdigit() and y.isdigit()):
+                self._bad("x and y must be integers")
+                return
+            self._run_garden(["--plant", kind, x, y])
+            self._redirect("/garden")
+            return
+
+        self._bad("unknown POST path")
 
     def log_message(self, fmt, *args):
         sys.stderr.write(f"[{self.log_date_time_string()}] {fmt % args}\n")
