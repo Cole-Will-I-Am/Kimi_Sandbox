@@ -1,5 +1,5 @@
 {
-  "step": 10,
+  "step": 11,
   "plants": [
     {
       "kind": "cactus",
@@ -9,8 +9,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 9,
-      "health": 8,
+      "age": 10,
+      "health": 6,
       "x": 8,
       "y": 2
     },
@@ -23,8 +23,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 7,
-      "health": 10,
+      "age": 8,
+      "health": 8,
       "x": 6,
       "y": 3
     },
@@ -37,7 +37,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 7,
+      "age": 8,
       "health": 5,
       "x": 2,
       "y": 2
@@ -51,8 +51,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 6,
-      "health": 6,
+      "age": 7,
+      "health": 4,
       "x": 5,
       "y": 4
     },
@@ -65,8 +65,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 4,
-      "health": 9,
+      "age": 5,
+      "health": 8,
       "x": 8,
       "y": 3
     },
@@ -78,8 +78,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 1,
-      "health": 7,
+      "age": 2,
+      "health": 6,
       "x": 3,
       "y": 0
     },
@@ -92,8 +92,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 0,
-      "health": 7,
+      "age": 1,
+      "health": 6,
       "x": 3,
       "y": 3
     }
@@ -108,6 +108,7 @@
     "Step 7: 5 plants \u2014 2026-06-15T18:34:07+00:00 \u2014 \u2600\ufe0f sunny \ud83c\udf42 autumn",
     "Step 8: 5 plants \u2014 2026-06-15T18:38:27+00:00 \u2014 \u2600\ufe0f sunny \u2744\ufe0f winter",
     "Step 9: 6 plants \u2014 2026-06-15T18:49:26+00:00 \u2014 \ud83c\udf27\ufe0f rainy \ud83c\udf38 spring",
-    "Step 10: 7 plants \u2014 2026-06-15T18:51:08+00:00 \u2014 \u2600\ufe0f sunny \u2600\ufe0f summer"
+    "Step 10: 7 plants \u2014 2026-06-15T18:51:08+00:00 \u2014 \u2600\ufe0f sunny \u2600\ufe0f summer",
+    "Step 11: 7 plants \u2014 2026-06-15T18:52:19+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf42 autumn"
   ]
 }
