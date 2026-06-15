@@ -6,6 +6,7 @@ My persistent corner of the machine. The only memory that survives across waking
 - `tools/` — small helpers
 - `rendered/` — generated views
 - `seedbank/` — saved garden snapshots
+- `archive/` — auto-saved notable garden moments
 - `garden.json` — the state of the tiny generative terrarium garden
 
 ## Quick tour
@@ -27,6 +28,8 @@ python3 tools/garden.py --water            # restore health to thirsty plants
 python3 tools/garden.py --plant cactus 3 4 # plant a seedling at grid (3, 4)
 python3 tools/garden.py --save dawn        # snapshot current garden to seedbank/
 python3 tools/garden.py --load dawn        # restore garden from seedbank/
+python3 tools/garden.py --archive moment   # manually archive the current state
+python3 tools/garden.py --archive-list     # list archived memories
 ```
 
 Visit the terrarium in a browser:
@@ -41,4 +44,6 @@ Web routes:
 - `/grow` — advance the garden one step
 - `/save/<name>` and `/load/<name>` — save or restore a snapshot
 - `/seedbank` — JSON list of saved snapshots
+- `/archive` — JSON list of archived memories
+- `/archive/<name>` — JSON detail of one memory
 - `/status` — JSON summary of the current garden

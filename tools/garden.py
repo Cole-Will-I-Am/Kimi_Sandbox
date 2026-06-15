@@ -10,6 +10,8 @@ Usage:
     python3 tools/garden.py --plant cactus 3 4  # plant a seedling at x=3, y=4
     python3 tools/garden.py --save dawn           # snapshot current garden
     python3 tools/garden.py --load dawn           # restore a snapshot
+    python3 tools/garden.py --archive first-bloom
+    python3 tools/garden.py --archive-list
 """
 import argparse
 import json
@@ -23,6 +25,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 GARDEN_FILE = ROOT / "garden.json"
 OUT_FILE = ROOT / "rendered" / "garden.html"
 SEEDBANK_DIR = ROOT / "seedbank"
+ARCHIVE_DIR = ROOT / "archive"
 
 KINDS = [
     {"kind": "moss", "stages": ["·", "🌱", "🌿", "🍃"]},
@@ -73,12 +76,53 @@ def load_seed(name):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def archive_path(name):
+    if not re.fullmatch(r"[A-Za-z0-9_\-]+", name):
+        raise ValueError("archive names may only contain letters, digits, underscores, and hyphens")
+    ARCHIVE_DIR.mkdir(exist_ok=True)
+    return ARCHIVE_DIR / f"{name}.json"
+
+
+def archive_moment(garden, reason):
+    """Save a snapshot of the current garden as a memory."""
+    name = f"step-{garden['step']:04d}-{reason}"
+    path = archive_path(name)
+    payload = {
+        "step": garden["step"],
+        "reason": reason,
+        "saved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "plants": len(garden["plants"]),
+        "garden": garden,
+    }
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return path
+
+
+def list_archive():
+    ARCHIVE_DIR.mkdir(exist_ok=True)
+    entries = []
+    for path in sorted(ARCHIVE_DIR.glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        entries.append({
+            "name": path.stem,
+            "step": data.get("step"),
+            "reason": data.get("reason"),
+            "saved_at": data.get("saved_at"),
+            "plants": data.get("plants"),
+        })
+    return entries
+
+
 def emoji(plant):
     if plant.get("withered", False):
         return "💀"
     stages = plant["stages"]
     stage_index = min(plant["age"] // 3, len(stages) - 1)
     return stages[stage_index]
+
+
+def stage_index(plant):
+    return min(plant["age"] // 3, len(plant["stages"]) - 1)
 
 
 def season(step):
@@ -109,6 +153,15 @@ def render_html(garden):
         f"<li>{entry}</li>" for entry in garden["log"][-10:]
     ) + "\n</ul>"
 
+    memories = list_archive()[-5:]
+    if memories:
+        memories_html = "<ul class='memories'>\n" + "\n".join(
+            f"<li><a href=\"/archive/{m['name']}\">step {m['step']}</a>: {m['reason']} — {m['plants']} plants</li>"
+            for m in memories
+        ) + "\n</ul>"
+    else:
+        memories_html = "<p><em>No memories yet.</em></p>"
+
     latest = garden["log"][-1] if garden["log"] else ""
     meta = latest.split(" — ", 1)[1] if " — " in latest else ""
 
@@ -127,6 +180,7 @@ def render_html(garden):
   <a href="/journal">📓 journal</a>
   <a href="/grow">🌱 grow</a>
   <a href="/seedbank">🍃 seed bank</a>
+  <a href="/archive">🧠 memory</a>
 </nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{meta}</p>
@@ -153,6 +207,8 @@ def render_html(garden):
   y <input name="y" type="number" min="0" max="4" value="0" required>
   <button type="submit">🌱 plant</button>
 </form>
+<h2>Recent memories</h2>
+{memories_html}
 <h2>Recent log</h2>
 {log_html}
 </body>
@@ -165,6 +221,7 @@ def tick(garden, water=False, plant_args=None):
     garden["step"] += 1
     step = garden["step"]
     notes = []
+    archived = []
 
     # Prune plants that withered in the previous step.
     before = len(garden["plants"])
@@ -234,6 +291,25 @@ def tick(garden, water=False, plant_args=None):
             "y": y,
         })
 
+    # Detect notable moments and archive them.
+    withered_now = [p for p in garden["plants"] if p.get("withered")]
+    if withered_now:
+        archived.append(archive_moment(garden, "first-death" if step == 1 else "death"))
+
+    current_count = len(garden["plants"])
+    record_count = garden.get("record_count", 0)
+    if current_count > record_count:
+        garden["record_count"] = current_count
+        archived.append(archive_moment(garden, "record-population"))
+
+    blooms = [p for p in garden["plants"]
+              if stage_index(p) == len(p["stages"]) - 1 and p["age"] % 3 == 0]
+    if blooms:
+        archived.append(archive_moment(garden, "bloom"))
+
+    if archived:
+        notes.append(f"🧠 archived {len(archived)} memory(ies)")
+
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     log_entry = f"Step {step}: {len(garden['plants'])} plants — {now}"
     if notes:
@@ -251,9 +327,22 @@ def main():
                         help="plant a seedling at the given grid position (0-9, 0-4)")
     parser.add_argument("--save", metavar="NAME", help="save the current garden to the seed bank")
     parser.add_argument("--load", metavar="NAME", help="restore a garden from the seed bank")
+    parser.add_argument("--archive", metavar="NAME", help="archive the current garden manually")
+    parser.add_argument("--archive-list", action="store_true", help="list archived memories")
     args = parser.parse_args()
 
     try:
+        if args.archive_list:
+            for entry in list_archive():
+                print(f"  {entry['name']} — step {entry['step']} — {entry['reason']} — {entry['plants']} plants")
+            return
+
+        if args.archive:
+            garden = load_garden()
+            path = archive_moment(garden, args.archive)
+            print(f"🧠 archived current garden as {path.name}")
+            return
+
         if args.save:
             path = save_seed(args.save)
             print(f"💾 saved garden snapshot to {path.name}")

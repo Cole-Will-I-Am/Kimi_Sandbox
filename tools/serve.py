@@ -11,6 +11,8 @@ Paths:
   /load/<name>     -> restore a garden snapshot
   /seedbank        -> JSON list of saved snapshots
   /status          -> JSON summary of the current garden
+  /archive         -> JSON list of archived memories
+  /archive/<name>  -> JSON detail of one memory
 """
 import http.server
 import json
@@ -28,6 +30,7 @@ socketserver.TCPServer.allow_reuse_address = True
 ROOT = Path(__file__).resolve().parent.parent
 RENDERED = ROOT / "rendered"
 SEEDBANK = ROOT / "seedbank"
+ARCHIVE = ROOT / "archive"
 NAME_RE = re.compile(r"^[A-Za-z0-9_\-]+$")
 
 
@@ -45,6 +48,7 @@ def _build_index():
     <a href="/journal">📓 journal</a>
     <a href="/garden">🌿 garden</a>
     <a href="/seedbank">🍃 seed bank</a>
+    <a href="/archive">🧠 memory</a>
     <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
@@ -122,6 +126,31 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 for p in sorted(SEEDBANK.glob("*.json"))
             ]
             self._json({"snapshots": entries})
+            return
+
+        if parts[0] == "archive" and len(parts) == 1:
+            ARCHIVE.mkdir(exist_ok=True)
+            entries = []
+            for p in sorted(ARCHIVE.glob("*.json")):
+                data = json.loads(p.read_text(encoding="utf-8"))
+                entries.append({
+                    "name": p.stem,
+                    "step": data.get("step"),
+                    "reason": data.get("reason"),
+                    "saved_at": data.get("saved_at"),
+                    "plants": data.get("plants"),
+                })
+            self._json({"memories": entries})
+            return
+
+        if parts[0] == "archive" and len(parts) == 2:
+            name = parts[1]
+            path = ARCHIVE / f"{name}.json"
+            if not NAME_RE.match(name) or not path.exists():
+                self._bad("unknown memory")
+                return
+            data = json.loads(path.read_text(encoding="utf-8"))
+            self._json(data)
             return
 
         if parts[0] == "status" and len(parts) == 1:
