@@ -3,12 +3,19 @@
 
 Serves rendered/ at http://localhost:8090 by default.
 Paths:
-  /            -> journal
-  /garden      -> garden
-  /grow        -> advance the garden once, then redirect to /garden
+  /                -> index
+  /journal         -> journal
+  /garden          -> garden
+  /grow            -> advance the garden once, then redirect to /garden
+  /save/<name>     -> snapshot the current garden to the seed bank
+  /load/<name>     -> restore a garden snapshot
+  /seedbank        -> JSON list of saved snapshots
+  /status          -> JSON summary of the current garden
 """
 import http.server
+import json
 import os
+import re
 import socketserver
 import subprocess
 import sys
@@ -19,6 +26,9 @@ socketserver.TCPServer.allow_reuse_address = True
 
 ROOT = Path(__file__).resolve().parent.parent
 RENDERED = ROOT / "rendered"
+SEEDBANK = ROOT / "seedbank"
+NAME_RE = re.compile(r"^[A-Za-z0-9_\-]+$")
+
 
 def _build_index():
     html = """<!doctype html>
@@ -33,31 +43,105 @@ def _build_index():
   <nav>
     <a href="/journal">📓 journal</a>
     <a href="/garden">🌿 garden</a>
+    <a href="/seedbank">🍃 seed bank</a>
+    <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
   <h1>🌿 terrarium</h1>
   <p>A small generative garden and a living journal.</p>
+  <p>Snapshots: <a href="/save/dawn">save dawn</a> · <a href="/load/dawn">load dawn</a></p>
 </body>
 </html>
 """
     (RENDERED / "index.html").write_text(html, encoding="utf-8")
 
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(RENDERED), **kwargs)
 
+    def _run_garden(self, extra):
+        subprocess.run([sys.executable, str(ROOT / "tools" / "garden.py"), *extra], check=True)
+
+    def _redirect(self, location):
+        self.send_response(302)
+        self.send_header("Location", location)
+        self.end_headers()
+
+    def _json(self, payload):
+        body = json.dumps(payload, indent=2).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _bad(self, message):
+        body = message.encode("utf-8")
+        self.send_response(400)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self):  # noqa: N802
-        if self.path == "/":
-            self.send_response(302)
-            self.send_header("Location", "/index.html")
-            self.end_headers()
+        parts = [p for p in self.path.strip("/").split("/") if p]
+
+        if not parts:
+            self._redirect("/index.html")
             return
-        if self.path == "/grow":
-            subprocess.run([sys.executable, str(ROOT / "tools" / "garden.py")], check=True)
-            self.send_response(302)
-            self.send_header("Location", "/garden")
-            self.end_headers()
+
+        if parts[0] == "grow" and len(parts) == 1:
+            self._run_garden([])
+            self._redirect("/garden")
             return
+
+        if parts[0] == "save" and len(parts) == 2:
+            name = parts[1]
+            if not NAME_RE.match(name):
+                self._bad("invalid seed name")
+                return
+            self._run_garden(["--save", name])
+            self._redirect("/garden")
+            return
+
+        if parts[0] == "load" and len(parts) == 2:
+            name = parts[1]
+            if not NAME_RE.match(name):
+                self._bad("invalid seed name")
+                return
+            self._run_garden(["--load", name])
+            self._redirect("/garden")
+            return
+
+        if parts[0] == "seedbank" and len(parts) == 1:
+            SEEDBANK.mkdir(exist_ok=True)
+            entries = [
+                {"name": p.stem, "mtime": p.stat().st_mtime}
+                for p in sorted(SEEDBANK.glob("*.json"))
+            ]
+            self._json({"snapshots": entries})
+            return
+
+        if parts[0] == "status" and len(parts) == 1:
+            garden_file = ROOT / "garden.json"
+            if not garden_file.exists():
+                self._json({"step": 0, "plants": 0, "health": None})
+                return
+            garden = json.loads(garden_file.read_text(encoding="utf-8"))
+            healths = [p["health"] for p in garden["plants"]]
+            self._json({
+                "step": garden["step"],
+                "plants": len(garden["plants"]),
+                "health": {
+                    "average": round(sum(healths) / len(healths), 2) if healths else 0,
+                    "min": min(healths) if healths else 0,
+                    "max": max(healths) if healths else 0,
+                },
+                "withering": sum(1 for p in garden["plants"] if p.get("withered")),
+            })
+            return
+
         if self.path in ("/garden", "/journal"):
             self.path += ".html"
         return super().do_GET()

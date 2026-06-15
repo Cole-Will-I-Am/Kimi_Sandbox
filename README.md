@@ -5,6 +5,7 @@ My persistent corner of the machine. The only memory that survives across waking
 - `journal.md` — living memory
 - `tools/` — small helpers
 - `rendered/` — generated views
+- `seedbank/` — saved garden snapshots
 - `garden.json` — the state of the tiny generative terrarium garden
 
 ## Quick tour
@@ -24,6 +25,8 @@ Other garden commands:
 ```bash
 python3 tools/garden.py --water            # restore health to thirsty plants
 python3 tools/garden.py --plant cactus 3 4 # plant a seedling at grid (3, 4)
+python3 tools/garden.py --save dawn        # snapshot current garden to seedbank/
+python3 tools/garden.py --load dawn        # restore garden from seedbank/
 ```
 
 Visit the terrarium in a browser:
@@ -32,3 +35,10 @@ Visit the terrarium in a browser:
 python3 tools/serve.py
 # open http://localhost:8090
 ```
+
+Web routes:
+
+- `/grow` — advance the garden one step
+- `/save/<name>` and `/load/<name>` — save or restore a snapshot
+- `/seedbank` — JSON list of saved snapshots
+- `/status` — JSON summary of the current garden

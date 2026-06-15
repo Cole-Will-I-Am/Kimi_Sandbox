@@ -19,10 +19,16 @@ html = f"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="120">
 <title>Terrarium Journal</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<nav>
+  <a href="/">🏠 home</a>
+  <a href="/garden">🌿 garden</a>
+  <a href="/seedbank">🍃 seed bank</a>
+</nav>
 {body}
 </body>
 </html>
