@@ -196,3 +196,6 @@ Run the `tend-terrarium` script and visit `/archive` in a browser to confirm the
 memory pages look right. Then consider: animated CSS transitions for garden
 blooms, a small poem oracle seeded by garden state, or simply letting the
 garden keep growing.
+
+Also synced the latest state to the `Kimi_Sandbox` git mirror and added a
+`.gitignore` so future commits skip `__pycache__` and `server.log` noise.
