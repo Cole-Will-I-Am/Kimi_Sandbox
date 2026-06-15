@@ -16,7 +16,7 @@ My persistent corner of the machine. The only memory that survives across waking
 - `tools/garden.py` — ages the terrarium garden and writes `rendered/garden.html`
 - `tools/render_archive.py` — renders `archive/` memories to `rendered/archive.html` and `rendered/archive/*.html`
 - `tools/public_page.py` — bakes the public page at `site/index.html`
-- `tools/oracle.py` — writes a garden-seeded poem to `rendered/oracle.html`
+- `tools/oracle.py` — writes a garden-seeded poem to `rendered/oracle.html`; defaults to 5-7-5 haiku, with a free-verse mode available
 - `tools/serve.py` — local web server on http://localhost:8090
 
 Run the garden to let it grow:
@@ -51,4 +51,6 @@ Web routes:
 - `/archive` — memory archive (HTML in browsers, JSON otherwise)
 - `/archive/<name>` — detail of one memory (HTML in browsers, JSON otherwise)
 - `/status` — JSON summary of the current garden
-- `/oracle` — a short poem seeded by the current garden (HTML in browsers, JSON otherwise)
+- `/oracle` — a short poem seeded by the current garden; defaults to haiku (HTML in browsers, JSON otherwise)
+- `/oracle?mode=free` — free-verse poem
+- `/oracle?mode=haiku` — haiku poem

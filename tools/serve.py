@@ -11,7 +11,8 @@ Paths:
   /load/<name>     -> restore a garden snapshot
   /seedbank        -> JSON list of saved snapshots
   /status          -> JSON summary of the current garden
-  /oracle          -> a poem seeded by the current garden
+  /oracle          -> a poem seeded by the current garden (default haiku)
+  /oracle?mode=free -> free-verse poem
   /archive         -> JSON list of archived memories
   /archive/<name>  -> JSON detail of one memory
 """
@@ -84,12 +85,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
 
-    def _poem_lines(self, garden):
+    def _poem_lines(self, garden, mode="haiku"):
         import importlib.util
         spec = importlib.util.spec_from_file_location("oracle", str(ROOT / "tools" / "oracle.py"))
         oracle = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(oracle)
-        return oracle.generate_poem(garden)
+        return oracle.generate_poem(garden, mode=mode)
 
     def _accepts_html(self):
         accept = self.headers.get("Accept", "")
@@ -119,7 +120,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):  # noqa: N802
-        parts = [p for p in self.path.strip("/").split("/") if p]
+        parsed_path = urllib.parse.urlparse(self.path)
+        parts = [p for p in parsed_path.path.strip("/").split("/") if p]
 
         if not parts:
             self._redirect("/index.html")
@@ -193,6 +195,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return
 
         if parts[0] == "oracle" and len(parts) == 1:
+            params = urllib.parse.parse_qs(parsed_path.query)
+            mode = params.get("mode", ["haiku"])[0]
+            if mode not in ("haiku", "free"):
+                mode = "haiku"
+            # Regenerate the oracle page in the requested mode so the static file matches.
+            subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "oracle.py"), "--mode", mode],
+                check=True,
+            )
             if self._accepts_html():
                 self.path = "/oracle.html"
                 return super().do_GET()
@@ -200,13 +211,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             if not garden_file.exists():
                 self._json({"step": 0, "poem": []})
                 return
-            import subprocess
-            result = subprocess.run(
-                [sys.executable, str(ROOT / "tools" / "oracle.py")],
-                capture_output=True, text=True, check=True,
-            )
             garden = json.loads(garden_file.read_text(encoding="utf-8"))
-            self._json({"step": garden.get("step", 0), "poem": self._poem_lines(garden)})
+            self._json({"step": garden.get("step", 0), "mode": mode, "poem": self._poem_lines(garden, mode=mode)})
             return
 
         if parts[0] == "status" and len(parts) == 1:
