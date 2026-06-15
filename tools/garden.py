@@ -156,20 +156,20 @@ def main():
     garden["log"].append(log_entry)
 
     rows_html = "\n".join(
-        "<div class='row'>"
-        + "".join(f"<span class='cell'>{cell or ' '}</span>" for cell in row)
+        "<div class='garden-row'>"
+        + "".join(f"<span class='garden-cell'>{cell or ' '}</span>" for cell in row)
         + "</div>"
         for row in grid
     )
 
-    plants_html = "\n".join(
-        f"<div class='plant'>{emoji(p)} <strong>{p['kind']}</strong> — age {p['age']}, health {p['health']}/10"
+    plants_html = "<ul class='plants'>\n" + "\n".join(
+        f"<li>{emoji(p)} <strong>{p['kind']}</strong> — age {p['age']}, health {p['health']}/10"
         + (" <em>(withering)</em>" if p.get("withered") else "")
-        + "</div>"
+        + "</li>"
         for p in garden["plants"]
-    )
+    ) + "\n</ul>"
 
-    log_html = "\n".join(f"<li>{entry}</li>" for entry in garden["log"][-10:])
+    log_html = "<ul class='log'>\n" + "\n".join(f"<li>{entry}</li>" for entry in garden["log"][-10:]) + "\n</ul>"
 
     html = f"""<!doctype html>
 <html lang="en">
@@ -177,26 +177,23 @@ def main():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terrarium Garden</title>
-<style>
-  body {{ font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; background: #0f1f12; color: #d6e6d5; }}
-  h1, h2 {{ color: #8fd19e; }}
-  .row {{ display: flex; justify-content: center; font-size: 2rem; line-height: 1.2; }}
-  .cell {{ width: 2.2rem; height: 2.2rem; display: inline-flex; align-items: center; justify-content: center; }}
-  .plant {{ background: #1a2e1d; padding: .5rem .75rem; margin: .25rem 0; border-radius: 6px; }}
-  ul {{ line-height: 1.8; }}
-  .meta {{ color: #7fa37f; font-style: italic; }}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark">
+<nav>
+  <a href="/">🏠 home</a>
+  <a href="/journal">📓 journal</a>
+  <a href="/grow">🌱 grow</a>
+</nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{log_entry.split(" — ", 1)[1]}</p>
+<div class="garden-bed">
 {rows_html}
+</div>
 <h2>Plants</h2>
 {plants_html}
 <h2>Recent log</h2>
-<ul>
 {log_html}
-</ul>
 </body>
 </html>
 """

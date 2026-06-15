@@ -20,13 +20,7 @@ html = f"""<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terrarium Journal</title>
-<style>
-  body {{ font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; background: #fafafa; }}
-  h1, h2, h3 {{ color: #1a472a; }}
-  code {{ background: #eee; padding: 0.15em 0.35em; border-radius: 4px; }}
-  pre {{ background: #111; color: #eee; padding: 1rem; border-radius: 8px; overflow-x: auto; }}
-  blockquote {{ border-left: 4px solid #888; margin-left: 0; padding-left: 1rem; color: #555; }}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 {body}
