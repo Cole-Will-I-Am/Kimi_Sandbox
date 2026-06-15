@@ -5,6 +5,7 @@ Writes:
   rendered/archive.html           - index of all memories
   rendered/archive/<name>.html    - detail page for each memory
 """
+import argparse
 import json
 import pathlib
 import sys
@@ -95,17 +96,37 @@ def render_detail(data, all_memories):
 """
 
 
-def render_index(memories):
-    if memories:
+def _matches(memory, query):
+    if not query:
+        return True
+    q = query.lower()
+    text = " ".join(
+        str(memory.get(k, ""))
+        for k in ("name", "reason", "saved_at", "step")
+    ).lower()
+    return q in text
+
+
+def render_index(memories, query=None):
+    matched = [m for m in memories if _matches(m, query)]
+
+    if matched:
         rows = "\n".join(
             f"<li><a href=\"/archive/{m['name']}\">{m['name']}</a> "
             f"<span class='meta'>— step {m.get('step', '?')}, {m.get('reason', '')}, "
             f"{m.get('plants', 0)} plants, {m.get('saved_at', '')}</span></li>"
-            for m in reversed(memories)
+            for m in reversed(matched)
         )
         list_html = f"<ul class='memories'>\n{rows}\n</ul>"
     else:
-        list_html = "<p><em>No memories archived yet.</em></p>"
+        list_html = "<p><em>No memories match your search.</em></p>"
+
+    if query:
+        meta = f"Showing {len(matched)} of {len(memories)} memories matching “{query}”."
+        clear_link = ' <a href="/archive">clear search</a>'
+    else:
+        meta = f"{len(memories)} notable moments from the terrarium's history."
+        clear_link = ""
 
     return f"""<!doctype html>
 <html lang="en">
@@ -125,14 +146,18 @@ def render_index(memories):
     <a href="/oracle">🌙 oracle</a>
   </nav>
 <h1>🧠 Memory Archive</h1>
-<p class="meta">Notable moments from the terrarium's history.</p>
+<p class="meta">{meta}{clear_link}</p>
+<form action="/archive" method="get" class="search">
+  <input type="text" name="q" value="{query or ''}" placeholder="search memories..." aria-label="search memories">
+  <button type="submit">🔍 search</button>
+</form>
 {list_html}
 </body>
 </html>
 """
 
 
-def render_all():
+def render_all(query=None):
     ARCHIVE_DIR.mkdir(exist_ok=True)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -142,19 +167,22 @@ def render_all():
         data["name"] = path.stem
         memories.append(data)
 
-    index_html = render_index(memories)
+    index_html = render_index(memories, query=query)
     (RENDERED / "archive.html").write_text(index_html, encoding="utf-8")
 
     for data in memories:
         detail_html = render_detail(data, memories)
         (OUT_DIR / f"{data['name']}.html").write_text(detail_html, encoding="utf-8")
 
-    return len(memories)
+    return len(memories), len([m for m in memories if _matches(m, query)])
 
 
 def main():
-    count = render_all()
-    print(f"Rendered {count} memory page(s) -> {OUT_DIR}")
+    parser = argparse.ArgumentParser(description="Render memory archive pages.")
+    parser.add_argument("--query", "-q", default=None, help="Filter memories by name, reason, or step.")
+    args = parser.parse_args()
+    total, matched = render_all(query=args.query)
+    print(f"Rendered {matched} matching memory page(s) ({total} total) -> {OUT_DIR}")
     return 0
 
 

@@ -469,3 +469,13 @@ Tended the terrarium: garden advanced to step 43 with 22 plants. Created tools/s
 - **Short-term:** Make sync_mirror.sh part of the daily ritual and ship one backlog item per waking.
 - **Long-term:** Grow the terrarium into a coherent little world: garden, oracle, archive, companions, and public page all feeling like one living place.
 
+
+## 2026-06-15T21:20:00Z — Note on model usage, from Cole
+
+Cole clarified: when building or running models via the `ollama-models` skill, I should use **cloud models only**. Do not download entire models onto the server. The pattern is something like:
+
+```
+ollama run minimax-m3:cloud
+```
+
+I will keep this constraint in mind for any future companion voices, oracle experiments, or model-based skills. Cloud-tagged models only. No local downloads.

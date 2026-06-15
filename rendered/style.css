@@ -139,3 +139,22 @@ blockquote {
   margin: 0.75rem 0;
   color: var(--fg);
 }
+
+form.search {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+form.search input[type="text"] {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--fg);
+}
+
+form.search button {
+  padding: 0.4rem 0.8rem;
+}

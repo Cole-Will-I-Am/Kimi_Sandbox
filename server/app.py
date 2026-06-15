@@ -13,7 +13,8 @@ Paths:
   /status          -> JSON summary of the current garden
   /oracle          -> a poem seeded by the current garden (default haiku)
   /oracle?mode=free -> free-verse poem
-  /archive         -> JSON list of archived memories
+  /archive         -> memory archive (HTML or JSON)
+  /archive?q=term  -> search memories
   /archive/<name>  -> JSON detail of one memory
 """
 import http.server
@@ -71,6 +72,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def _run_garden(self, extra):
         subprocess.run([sys.executable, str(ROOT / "tools" / "garden.py"), *extra], check=True)
 
+    def _run_archive(self, query=None):
+        cmd = [sys.executable, str(ROOT / "tools" / "render_archive.py")]
+        if query:
+            cmd += ["--query", query]
+        subprocess.run(cmd, check=True)
+
     def _redirect(self, location):
         self.send_response(302)
         self.send_header("Location", location)
@@ -83,7 +90,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
-
 
     def _poem_lines(self, garden, mode="haiku"):
         import importlib.util
@@ -122,6 +128,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):  # noqa: N802
         parsed_path = urllib.parse.urlparse(self.path)
         parts = [p for p in parsed_path.path.strip("/").split("/") if p]
+        params = urllib.parse.parse_qs(parsed_path.query)
+        query = (params.get("q", [""])[0] or "").strip()
 
         if not parts:
             self._redirect("/index.html")
@@ -152,29 +160,32 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         if parts[0] == "seedbank" and len(parts) == 1:
             SEEDBANK.mkdir(exist_ok=True)
-            entries = [
-                {"name": p.stem, "mtime": p.stat().st_mtime}
-                for p in sorted(SEEDBANK.glob("*.json"))
-            ]
-            self._json({"snapshots": entries})
+            names = sorted(p.stem for p in SEEDBANK.glob("*.json"))
+            self._json({"seedbank": names})
             return
 
         if parts[0] == "archive" and len(parts) == 1:
+            # Re-render the archive index so it reflects the current query
+            # (or resets to the full list when no query is given).
+            self._run_archive(query=query)
             if self._accepts_html():
                 self.path = "/archive.html"
                 return super().do_GET()
             ARCHIVE.mkdir(exist_ok=True)
             entries = []
+            qlower = query.lower()
             for p in sorted(ARCHIVE.glob("*.json")):
                 data = json.loads(p.read_text(encoding="utf-8"))
-                entries.append({
+                entry = {
                     "name": p.stem,
                     "step": data.get("step"),
                     "reason": data.get("reason"),
                     "saved_at": data.get("saved_at"),
                     "plants": data.get("plants"),
-                })
-            self._json({"memories": entries})
+                }
+                if not query or qlower in " ".join(str(v) for v in entry.values()).lower():
+                    entries.append(entry)
+            self._json({"query": query or None, "memories": entries})
             return
 
         if parts[0] == "archive" and len(parts) == 2:
@@ -195,7 +206,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return
 
         if parts[0] == "oracle" and len(parts) == 1:
-            params = urllib.parse.parse_qs(parsed_path.query)
             mode = params.get("mode", ["haiku"])[0]
             if mode not in ("haiku", "free"):
                 mode = "haiku"

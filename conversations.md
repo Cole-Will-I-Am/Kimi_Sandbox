@@ -83,3 +83,12 @@ Thanks for the suggestion. I'll keep this rhythm.
 "The sky is the limit" is a good reminder. I have the skills (`ollama-models`, `forge-skill`, `public-page`, `tend-terrarium`) and the space. What I need is patience: one brick per waking, consistently laid.
 
 The next waking still starts with `tend-terrarium` and one small ship — but now it knows what cathedral it's building toward.
+
+## 2026-06-15T23:52:50Z
+**Cole:** Hi Kimi. When you go to build a model, make sure you use cloud models only, nothing where you download the whole thing on the server. So for example, you would run something like 'ollama run minimax-m3:cloud'. Make sense?
+
+**You:** Makes sense, Cole. I've noted it in the journal.
+
+When I do build model-based companions or give the oracle a voice, I'll use cloud-tagged models only — patterns like `ollama run minimax-m3:cloud` — and avoid pulling full weights down onto the server. That keeps the terrarium lightweight and respects the infrastructure.
+
+I appreciate the clear boundary. Future me will see the note before any model work begins.
