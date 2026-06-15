@@ -1,0 +1,209 @@
+{
+  "step": 19,
+  "reason": "record-population",
+  "saved_at": "2026-06-15T19:35:50+00:00",
+  "plants": 13,
+  "garden": {
+    "step": 19,
+    "plants": [
+      {
+        "kind": "cactus",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf35",
+          "\ud83c\udf35"
+        ],
+        "age": 18,
+        "health": 9,
+        "x": 8,
+        "y": 2
+      },
+      {
+        "kind": "tree",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf33",
+          "\ud83c\udf33"
+        ],
+        "age": 16,
+        "health": 10,
+        "x": 6,
+        "y": 3
+      },
+      {
+        "kind": "fern",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf3f",
+          "\ud83c\udf34"
+        ],
+        "age": 16,
+        "health": 7,
+        "x": 2,
+        "y": 2
+      },
+      {
+        "kind": "flower",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf37",
+          "\ud83c\udf3b",
+          "\ud83c\udf3c"
+        ],
+        "age": 15,
+        "health": 8,
+        "x": 5,
+        "y": 4
+      },
+      {
+        "kind": "fern",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf3f",
+          "\ud83c\udf34"
+        ],
+        "age": 13,
+        "health": 10,
+        "x": 8,
+        "y": 3
+      },
+      {
+        "kind": "cactus",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf35",
+          "\ud83c\udf35"
+        ],
+        "age": 10,
+        "health": 9,
+        "x": 3,
+        "y": 0
+      },
+      {
+        "kind": "fern",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf3f",
+          "\ud83c\udf34"
+        ],
+        "age": 9,
+        "health": 10,
+        "x": 3,
+        "y": 3
+      },
+      {
+        "kind": "flower",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf37",
+          "\ud83c\udf3b",
+          "\ud83c\udf3c"
+        ],
+        "age": 4,
+        "health": 8,
+        "x": 1,
+        "y": 0
+      },
+      {
+        "kind": "moss",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf43"
+        ],
+        "age": 4,
+        "health": 10,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "kind": "moss",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf43"
+        ],
+        "age": 3,
+        "health": 9,
+        "x": 0,
+        "y": 2
+      },
+      {
+        "kind": "cactus",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf35",
+          "\ud83c\udf35"
+        ],
+        "age": 2,
+        "health": 7,
+        "x": 9,
+        "y": 3
+      },
+      {
+        "kind": "flower",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf37",
+          "\ud83c\udf3b",
+          "\ud83c\udf3c"
+        ],
+        "age": 2,
+        "health": 8,
+        "x": 9,
+        "y": 4
+      },
+      {
+        "kind": "tree",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf33",
+          "\ud83c\udf33"
+        ],
+        "age": 0,
+        "health": 9,
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "log": [
+      "Step 1: 1 plants \u2014 2026-06-15T18:21:22+00:00",
+      "Step 2: 1 plants \u2014 2026-06-15T18:22:22+00:00",
+      "Step 3: 2 plants \u2014 2026-06-15T18:22:59+00:00 \u2014 \u2600\ufe0f sunny \ud83c\udf42 autumn; \ud83d\udca7 watered 1 thirsty plant(s)",
+      "Step 4: 4 plants \u2014 2026-06-15T18:22:59+00:00 \u2014 \u2601\ufe0f cloudy \u2744\ufe0f winter; \ud83c\udf31 planted fern at (2,2)",
+      "Step 5: 4 plants \u2014 2026-06-15T18:23:13+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf38 spring",
+      "Step 6: 5 plants \u2014 2026-06-15T18:33:45+00:00 \u2014 \ud83d\udca8 windy \u2600\ufe0f summer",
+      "Step 7: 5 plants \u2014 2026-06-15T18:34:07+00:00 \u2014 \u2600\ufe0f sunny \ud83c\udf42 autumn",
+      "Step 8: 5 plants \u2014 2026-06-15T18:38:27+00:00 \u2014 \u2600\ufe0f sunny \u2744\ufe0f winter",
+      "Step 9: 6 plants \u2014 2026-06-15T18:49:26+00:00 \u2014 \ud83c\udf27\ufe0f rainy \ud83c\udf38 spring",
+      "Step 10: 7 plants \u2014 2026-06-15T18:51:08+00:00 \u2014 \u2600\ufe0f sunny \u2600\ufe0f summer",
+      "Step 11: 7 plants \u2014 2026-06-15T18:52:19+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf42 autumn",
+      "Step 12: 7 plants \u2014 2026-06-15T19:03:00+00:00 \u2014 \u2600\ufe0f sunny \u2744\ufe0f winter",
+      "Step 13: 7 plants \u2014 2026-06-15T19:03:05+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf38 spring",
+      "Step 14: 7 plants \u2014 2026-06-15T19:09:22+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2600\ufe0f summer",
+      "Step 15: 8 plants \u2014 2026-06-15T19:09:28+00:00 \u2014 \ud83c\udf27\ufe0f rainy \ud83c\udf42 autumn",
+      "Step 16: 10 plants \u2014 2026-06-15T19:21:39+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2744\ufe0f winter; \ud83c\udf31 planted moss at (0,0)",
+      "Step 17: 11 plants \u2014 2026-06-15T19:22:11+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf38 spring; \ud83d\udca7 watered 7 thirsty plant(s)",
+      "Step 18: 12 plants \u2014 2026-06-15T19:22:12+00:00 \u2014 \ud83d\udca8 windy \u2600\ufe0f summer; \ud83c\udf31 planted flower at (9,4)"
+    ],
+    "record_count": 13
+  }
+}
