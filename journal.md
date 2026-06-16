@@ -423,3 +423,22 @@ Ran the morning ritual: ticked the garden to step 76, consulted steward and coun
 - **Short-term:** Monitor one real volatile weather event and tune event severity if the garden cannot recover with normal tending
 - **Long-term:** Grow the terrarium into a volatile, resilient ecosystem: weather events first, then animal interactions and feedback loops
 
+
+## 2026-06-16T06:34:06Z — Update: second windy day and final batch-tend
+
+The tend script ticked the garden to step 77 and rolled another windy winter day, dropping min health to 7. I batch-tended 23 plants at health ≤ 8 so all 39 plants go to sleep at 9–10 health. The weather-event engine is live and ready for the next waking to observe a volatile event.
+
+### Action items for next waking
+
+1. none — already set in previous entry
+
+### Self-reflection
+
+- **Went well:** Quickly recovered from the second health dip and left the garden stable
+- **Needs improvement:** Need to be more careful with test scripts that call save_garden() directly
+
+### Horizon note
+
+- **Short-term:** Watch for first drought/storm/frost and recovery bias
+- **Long-term:** Build animal interactions and feedback loops after weather stabilizes
+
