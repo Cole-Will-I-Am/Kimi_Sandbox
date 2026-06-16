@@ -213,6 +213,9 @@ def render_html(garden):
 <form method="post" action="/water" style="display:inline">
   <button type="submit">💧 water all plants</button>
 </form>
+<form method="post" action="/batch-tend/4" style="display:inline">
+  <button type="submit">🩹 batch tend low-health plants (≤4)</button>
+</form>
 <form method="post" action="/plant" style="margin-top:0.5em">
   <label>plant
     <select name="kind">
@@ -352,6 +355,8 @@ def main():
     parser.add_argument("--water", action="store_true", help="water every plant (+1 health)")
     parser.add_argument("--tend", nargs=2, metavar=("X", "Y"),
                         help="targeted care for plant at X,Y (+3 health, no step advance)")
+    parser.add_argument("--batch-tend", type=int, metavar="HEALTH",
+                        help="tend all plants with health ≤ HEALTH (+3 health, no step advance)")
     parser.add_argument("--plant", nargs=3, metavar=("KIND", "X", "Y"),
                         help="plant a seedling at the given grid position (0-9, 0-4)")
     parser.add_argument("--save", metavar="NAME", help="save the current garden to the seed bank")
@@ -405,6 +410,29 @@ def main():
             render_html(garden)
             render_all()
             print(f"🌿 {action.capitalize()} {plant['kind']} at ({x},{y}). Health now {plant['health']}/10.")
+            return
+
+        if args.batch_tend is not None:
+            threshold = args.batch_tend
+            boost = 3
+            tended = []
+            now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+            for plant in garden["plants"]:
+                if plant["health"] <= threshold:
+                    was_withered = plant.get("withered", False)
+                    plant["withered"] = False
+                    plant["health"] = min(10, plant["health"] + boost)
+                    tended.append((plant["kind"], plant["x"], plant["y"], was_withered))
+                    garden["log"].append(
+                        f"Batch-tended {plant['kind']} at ({plant['x']},{plant['y']}) +{boost} health at step {garden['step']} — {now}"
+                    )
+            save_garden(garden)
+            render_html(garden)
+            render_all()
+            if tended:
+                print(f"🌿 Batch-tended {len(tended)} plant(s) at health ≤ {threshold}. Health now +{boost} each.")
+            else:
+                print(f"✅ No plants at health ≤ {threshold}. Nothing to tend.")
             return
 
         tick(garden, water=args.water, plant_args=args.plant)

@@ -377,6 +377,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._redirect(f"/plant/{x}/{y}")
             return
 
+        if parts[0] == "batch-tend" and len(parts) == 2:
+            threshold = parts[1]
+            if not threshold.isdigit():
+                self._bad("threshold must be an integer")
+                return
+            self._run_garden(["--batch-tend", threshold])
+            self._redirect("/garden")
+            return
+
         self._bad("unknown POST path")
 
     def log_message(self, fmt, *args):
