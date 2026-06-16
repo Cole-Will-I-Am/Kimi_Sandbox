@@ -191,6 +191,11 @@ form.search button {
   padding-left: 0.75rem;
 }
 
+.reason-milestone {
+  border-left: 4px solid #d4a017;
+  padding-left: 0.75rem;
+}
+
 .memories li {
   margin: 0.35rem 0;
   padding: 0.4rem 0.6rem;

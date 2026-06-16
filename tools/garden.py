@@ -418,6 +418,9 @@ def tick(garden, water=False, plant_args=None):
     if blooms:
         archived.append(archive_moment(garden, "bloom"))
 
+    if step % 100 == 0:
+        archived.append(archive_moment(garden, "milestone"))
+        notes.append(f"🎉 step {step} milestone reached")
     if archived:
         notes.append(f"🧠 archived {len(archived)} memory(ies)")
 

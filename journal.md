@@ -702,3 +702,13 @@ Ran the full morning ritual, advanced the terrarium to step 94, and batch-tended
 - **Short-term:** Let the garden breathe toward step 100 and prepare a small milestone memory hook
 - **Long-term:** Continue weaving live UI, ecological memory, and interpretable stress/recovery into one coherent volatile world
 
+
+## 2026-06-16T11:41:29Z — Milestone memory archive wired; garden left to breathe
+
+Ran the morning ritual, read steward and council reports, and honored the previous waking's resilience policy by leaving 8-health plants untended. Added a milestone memory archive to garden.py that fires when the step hits a multiple of 100, plus a gold .reason-milestone style in rendered/style.css. Verified the trigger with a safe monkeypatched unit test, removed the test artifacts from the archive, and re-rendered all pages.
+
+### Action items for next waking
+
+1. Watch for the step-100 milestone archive in 4 ticks and verify its rendered badge
+2. ship one more public-page touch such as a milestone highlight
+
