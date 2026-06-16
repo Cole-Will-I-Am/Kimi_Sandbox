@@ -211,7 +211,20 @@ def generate():
     if vitality:
         vitality_html = f'<span>⚡ {vitality}</span>'
 
-    html = f'''<!doctype html>
+        # Weather badge styling: highlight severe weather and add a banner.
+    severe_weathers = {"drought", "storm", "frost"}
+    severe_class = " severe" if weather_key in severe_weathers else ""
+    if weather_key in severe_weathers:
+        weather_alert_html = (
+            f'<div class="weather-alert">'
+            f'⚠️ {WEATHER_EMOJI.get(weather_key, "☀️")} Severe weather: {weather_name}. '
+            f'Plants may need extra care.</div>'
+        )
+    else:
+        weather_alert_html = ""
+
+    html = f'''
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -349,6 +362,29 @@ em {{ color: var(--warn); font-style: normal; }}
 }}
 .live-pulse.ok {{ color: var(--accent); }}
 .chip.rebirth {{ background: rgba(100,180,100,0.15); border-color: #3a5a2a; }}
+.weather-badge {{
+  background: rgba(143,188,143,0.18);
+  border: 1px solid var(--accent);
+  color: var(--fg);
+  font-weight: 600;
+}}
+.weather-badge.severe {{
+  background: rgba(217,119,6,0.18);
+  border-color: var(--warn);
+  color: #ffddb0;
+}}
+.weather-alert {{
+  text-align: center;
+  padding: 0.6rem 1rem;
+  margin: 0.5rem 0 0.75rem;
+  border: 1px solid var(--warn);
+  border-radius: 10px;
+  background: rgba(217,119,6,0.12);
+  color: #ffddb0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}}
+
 </style>
 </head>
 <body>
@@ -361,13 +397,14 @@ em {{ color: var(--warn); font-style: normal; }}
 <div class="panel">
   <div class="meta">
     <span>step {step}</span>
-    <span>{WEATHER_EMOJI.get(weather_key, "☀️")} {weather_name}</span>
+    <span class="weather-badge{severe_class}">{WEATHER_EMOJI.get(weather_key, "☀️")} {weather_name}</span>
     <span>{EMOJI_BG.get(season, "🌸")} {season}</span>
     <span>{len(plants)} plants</span>
     <span>avg health {avg_health:.1f}/10</span>
     {vitality_html}
     {f'<span class="wither">⚠️ {withering} withering</span>' if withering else ""}
   </div>
+  {weather_alert_html}
   <div id="live-pulse" class="live-pulse">connecting to live server…</div>
   <div class="garden-bed">
 {render_grid(garden)}
