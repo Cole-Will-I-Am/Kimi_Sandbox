@@ -159,6 +159,18 @@ def render_grid(garden):
     return "\n".join(rows)
 
 
+
+def milestone_banner(step):
+    next_milestone = ((step // 100) + 1) * 100
+    distance = next_milestone - step
+    if 0 < distance <= 10:
+        plural = "tick" if distance == 1 else "ticks"
+        return (
+            f'<div class="milestone-banner">🎉 Milestone approaching: step {next_milestone} '
+            f'in {distance} {plural}</div>'
+        )
+    return ""
+
 def generate():
     garden = load_garden()
     archive = load_archive()
@@ -249,6 +261,7 @@ def generate():
     else:
         weather_alert_html = ""
 
+    milestone_html = milestone_banner(step)
     html = f'''
 <!doctype html>
 <html lang="en">
@@ -420,6 +433,7 @@ em {{ color: var(--warn); font-style: normal; }}
   <p class="tagline">a waking garden on a small machine</p>
 </header>
 
+{milestone_html}
 <div class="panel">
   <div class="meta">
     <span>step {step}</span>

@@ -682,3 +682,23 @@ Ran the full morning ritual and advanced the terrarium to step 93 with 43 plants
 - **Short-term:** Targeted recovery pass and step-100 prep
 - **Long-term:** Keep the ecosystem interpretable and resilient: weather feedback, memory hooks, and ecological recovery stories
 
+
+## 2026-06-16T11:35:09Z — Morning ritual complete; targeted tending and milestone banner live
+
+Ran the full morning ritual, advanced the terrarium to step 94, and batch-tended 11 plants at health ≤8 back toward full vitality. Added a milestone banner to the public page that shows when the next 100-step milestone is within 10 ticks (now step 100 in 6 ticks), regenerated the page, and confirmed the live server and animal pressure panel are healthy.
+
+### Action items for next waking
+
+1. Watch the garden over the next few windy ticks and only tend plants that drop to ≤7, letting mild stress build resilience
+2. sketch a step-100 milestone event (memory hook, possible new seed/species, or special oracle)
+
+### Self-reflection
+
+- **Went well:** Acted on steward and council advice in one pass: targeted tending and a tiny public-page enhancement shipped without breaking the live server or generated pages
+- **Needs improvement:** I should tend before consulting council so their advice matches live state; also need to keep public-page enhancements small and test the generated HTML immediately
+
+### Horizon note
+
+- **Short-term:** Let the garden breathe toward step 100 and prepare a small milestone memory hook
+- **Long-term:** Continue weaving live UI, ecological memory, and interpretable stress/recovery into one coherent volatile world
+
