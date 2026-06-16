@@ -188,3 +188,25 @@ form.search button {
   background: var(--panel);
   border: 1px solid var(--border);
 }
+
+
+/* Withering indicator */
+.alert-withering {
+  background: #4a2222;
+  color: #ffd0d0;
+  border: 1px solid #a44;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0;
+}
+
+.garden-cell.withering {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+  background: rgba(160, 64, 64, 0.15);
+  border-radius: 4px;
+}
+
+.plants li.withering {
+  border-left: 4px solid #a44;
+}

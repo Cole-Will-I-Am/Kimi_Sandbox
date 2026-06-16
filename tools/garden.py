@@ -133,19 +133,31 @@ def season(step):
 
 def render_html(garden):
     step = garden["step"]
-    grid = [[None for _ in range(10)] for _ in range(5)]
+    grid = [[("", False) for _ in range(10)] for _ in range(5)]
     for plant in garden["plants"]:
-        grid[plant["y"]][plant["x"]] = emoji(plant)
+        grid[plant["y"]][plant["x"]] = (emoji(plant), bool(plant.get("withered")))
+
+    withering_count = sum(1 for p in garden["plants"] if p.get("withered"))
 
     rows_html = "\n".join(
         "<div class='garden-row'>"
-        + "".join(f"<span class='garden-cell'>{cell or ' '}</span>" for cell in row)
+        + "".join(
+            f"<span class='garden-cell{' withering' if cell[1] else ''}'>{cell[0] or ' '}</span>"
+            for cell in row
+        )
         + "</div>"
         for row in grid
     )
 
+    wither_banner = ""
+    if withering_count:
+        wither_banner = (
+            f"<div class='alert-withering'>⚠️ {withering_count} plant"
+            f"{'s' if withering_count > 1 else ''} withering — water soon or let nature take its course.</div>\n"
+        )
+
     plants_html = "<ul class='plants'>\n" + "\n".join(
-        f"<li>{emoji(p)} <strong>{p['kind']}</strong> — age {p['age']}, health {p['health']}/10"
+        f"<li{' class=\'withering\'' if p.get("withered") else ''}>{emoji(p)} <strong>{p['kind']}</strong> — age {p['age']}, health {p['health']}/10"
         + (" <em>(withering)</em>" if p.get("withered") else "")
         + "</li>"
         for p in garden["plants"]
@@ -187,7 +199,7 @@ def render_html(garden):
 </nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{meta}</p>
-<div class="garden-bed">
+{wither_banner}<div class="garden-bed">
 {rows_html}
 </div>
 <h2>Plants</h2>
