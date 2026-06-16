@@ -271,3 +271,58 @@ form.search button {
   color: var(--text);
   line-height: 1.55;
 }
+
+/* Animal chips and pressure badges */
+.memory-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.95rem;
+}
+.chip .role {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.pressure-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.pressure-badge {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+.pressure-badge.good {
+  border-left: 4px solid #6a4;
+}
+.pressure-badge.neutral {
+  border-left: 4px solid #aa8;
+}
+.pressure-badge.bad {
+  border-left: 4px solid #a44;
+}
+.pressure-badge .label {
+  display: block;
+  font-weight: 600;
+  color: var(--fg);
+}
+.pressure-badge .state {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}

@@ -149,6 +149,9 @@ def detect_population_triggers(garden, animals, previous):
 
 def tick(garden, animals):
     step = garden.get("step", 0)
+    if animals.get("step", 0) >= step:
+        # Already ticked for this garden step; just render current state.
+        return animals
     weather = garden.get("weather", {}) or {}
     weather_key = weather.get("key", "normal")
     severe = weather_key in {"drought", "storm", "frost"}
@@ -237,13 +240,74 @@ def tick(garden, animals):
     return animals
 
 
+
+def compute_pressure(garden, animals):
+    """Return a dict of pressure status for each animal species."""
+    weather = garden.get("weather", {}) or {}
+    weather_key = weather.get("key", "normal")
+    severe = weather_key in {"drought", "storm", "frost"}
+    plants = garden.get("plants", [])
+    plant_count = len(plants)
+    avg_health = sum(pl.get("health", 10) for pl in plants) / max(plant_count, 1)
+    withering = sum(1 for pl in plants if pl.get("withered"))
+    flowers = sum(1 for pl in plants if pl.get("kind") == "flower")
+    pops = animals.get("populations", {})
+    pressures = {}
+
+    bees = pops.get("bee", {}).get("count", 0)
+    if severe:
+        pressures["bee"] = ("bad", "severe weather shuts pollination")
+    elif flowers >= 3:
+        pressures["bee"] = ("good", f"{flowers} flowers blooming")
+    else:
+        pressures["bee"] = ("neutral", f"{flowers} flower(s); mild weather")
+
+    rabbits = pops.get("rabbit", {}).get("count", 0)
+    foxes = pops.get("fox", {}).get("count", 0)
+    if severe:
+        pressures["rabbit"] = ("bad", "severe weather stresses grazers")
+    elif plant_count > 20 and avg_health >= 8:
+        pressures["rabbit"] = ("good", f"lush garden, {plant_count} plants")
+    else:
+        pressures["rabbit"] = ("neutral", "grazing conditions are fair")
+    if foxes * 3 > rabbits and rabbits > 0:
+        pressures["rabbit"] = ("bad", f"{foxes} foxes hunting {rabbits} rabbits")
+
+    if severe:
+        pressures["fox"] = ("bad", "severe weather hurts hunting")
+    elif rabbits >= 5:
+        pressures["fox"] = ("good", f"{rabbits} rabbits to hunt")
+    elif rabbits < 2:
+        pressures["fox"] = ("bad", f"only {rabbits} rabbit(s) left")
+    else:
+        pressures["fox"] = ("neutral", f"{rabbits} rabbits available")
+
+    if severe:
+        pressures["worm"] = ("bad", "severe weather slows decay")
+    elif withering > 0:
+        pressures["worm"] = ("good", f"{withering} withering plant(s)")
+    elif plant_count > 25:
+        pressures["worm"] = ("good", f"{plant_count} plants enrich soil")
+    else:
+        pressures["worm"] = ("neutral", "soil activity is steady")
+
+    return pressures
+
 def render_html(animals, garden):
     pops = animals.get("populations", {})
     rows = []
+    pressure = compute_pressure(garden, animals)
     for name, info in pops.items():
         rows.append(
             f'<span class="chip">{info["emoji"]} <strong>{name}</strong>: {info["count"]} '
             f'<span class="role">({info["role"]})</span></span>'
+        )
+    pressure_rows = []
+    for name, info in pops.items():
+        state, reason = pressure.get(name, ("neutral", "drifting"))
+        pressure_rows.append(
+            f'<div class="pressure-badge {state}"><span class="label">{info["emoji"]} {name}</span>'
+            f'<span class="state">{reason}</span></div>'
         )
     log_html = "<ul class='log'>\n" + "\n".join(f"<li>{e}</li>" for e in animals.get("log", [])[-8:]) + "\n</ul>"
     weather = garden.get("weather", {})
@@ -272,6 +336,10 @@ def render_html(animals, garden):
 <div class="memory-strip">
 {" ".join(rows)}
 </div>
+<h2>Ecosystem pressure</h2>
+<div class="pressure-panel">
+{" ".join(pressure_rows)}
+</div>
 <h2>Recent events</h2>
 {log_html}
 <h2>Tend</h2>
@@ -298,9 +366,14 @@ def main():
     if args.status:
         print(json.dumps(animals, indent=2))
         return
-    tick(garden, animals)
+    prev_step = animals.get("step", 0)
+    animals = tick(garden, animals)
     render_html(animals, garden)
-    print(f"Animals ticked to step {animals['step']}; rendered {RENDERED_FILE}")
+    garden_step = garden.get("step", 0)
+    if animals.get("step", 0) > prev_step:
+        print(f"Animals ticked to step {animals['step']}; rendered {RENDERED_FILE}")
+    else:
+        print(f"Animals already at step {garden_step}; rendered {RENDERED_FILE}")
 
 
 if __name__ == "__main__":
