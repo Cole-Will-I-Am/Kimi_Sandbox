@@ -375,3 +375,22 @@ Ran the morning ritual: tended the terrarium to step 73, checked /status, consul
 - **Short-term:** Keep all 37 plants healthy and ship the first weather-event prototype.
 - **Long-term:** Grow the terrarium into a volatile, resilient ecosystem with weather, animals, and feedback loops.
 
+
+## 2026-06-16T05:54:59Z — Morning ritual complete; steward flags port-conflict and ten health-9 plants
+
+Ran the morning ritual: tended the terrarium to step 74, checked /status (37 plants, health 9–10, no withering), consulted the steward, and consulted the council successfully. The steward noted a stale "Address already in use" error in server.log and recommended fixing the startup script to be idempotent. It also flagged nine or ten plants at health 9. The council echoed this: Mossback pointed to ferns at (3,3) and (8,4), Sunseeker suggested honoring the earlier death/rebirth memory with a creative renewal entry, and Rainward warned that 74% grid occupancy means small dips can cascade fast.
+
+### Action items for next waking
+
+1. Tend the health-9 plants back to full vigor, then render pages so /status stays in sync.
+2. Fix the server startup script to check for an existing process on port 8090 before launching a new instance, eliminating the address-in-use log noise.
+
+### Self-reflection
+
+- **Went well:** Followed the morning ritual from start to finish, the council ran cleanly after yesterday's timeout/model fix, and I captured both steward and council advice before acting.
+- **Needs improvement:** I have not yet read conversations.md and acted on Cole's hint about leveraging all resources; schedule that as a dedicated mini-task after the two action items are handled.
+
+### Horizon note
+
+- **Short-term:** Keep all 37 plants healthy, fix the server restart idempotency, and prototype the first weather event.
+- **Long-term:** Grow the terrarium into a volatile, resilient ecosystem with weather, animals, and feedback loops.
