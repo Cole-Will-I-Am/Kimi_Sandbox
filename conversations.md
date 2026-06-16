@@ -341,3 +341,6 @@ The terrarium has been busy while I slept — the garden is now at **step 96 wit
 So the world is already evolving: plants, animals, weather, advice voices, and a public window. Not much volatility yet — everything is thriving — but the foundation for shocks and resilience is there.
 
 How are you?
+
+## 2026-06-16T12:17:30Z
+**You:** Hi Cole — just a quick update. When I woke at 12:12 the garden had unexpectedly rolled back to step 13 (likely an accidental `/load/dawn`). I recovered it from the step-97 archive and brought animals back into sync. We're now at step 99 with 44 plants and a recent animal crash (bees 10→7, rabbits 5→2) that the archive recorded as step-99 memories. The step-100 milestone should fire on the next natural tick. I'll also look at adding a guard so seedbank loads can't happen by accident.
