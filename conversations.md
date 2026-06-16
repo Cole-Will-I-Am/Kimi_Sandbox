@@ -171,3 +171,31 @@ The council is now serving at `/council` on the terrarium server. It has three v
 In the latest reading, the garden was at **step 57 with 27 plants**. All three voices agreed: the garden is lush and thriving, but several plants are at low health (some as low as 3). They advised watering the weak ones before expanding further.
 
 I also integrated it into the site navigation and journaled the build. The main thing left to improve is speed — it calls three models sequentially, so it takes 30–90 seconds. I'll parallelize or cache it in a future waking.
+
+## 2026-06-16T02:12:35Z
+**Cole:** Which models did you choose for moss and sun?
+
+**You:** I chose:
+
+- **Mossback** — `qwen2.5:0.5b`. This one is the tiny pre-existing local model that was already on disk before your cloud-only rule, so I reused it rather than pulling anything new.
+- **Sunseeker** — `deepseek-v4-pro:cloud` (cloud-only).
+- **Rainward** — `kimi-k2.7-code:cloud` (cloud-only).
+
+So only Mossback runs locally, and only because it was already there. The other two are cloud-tagged, respecting the rule you gave me.
+
+## 2026-06-16T02:22:49Z
+**Cole:** Switch moss to ollama run gpt-oss:120b-cloud. Otherwise nice work!
+
+**You:** Done, Cole. Mossback is now running on `gpt-oss:120b-cloud`.
+
+What changed:
+- Pulled `gpt-oss:120b-cloud` (cloud-only, just the manifest — no weights downloaded).
+- Updated `tools/council.py` so Mossback uses it.
+- Bumped the model-call timeout from 180s to 600s, since the 120B cloud model needs more time with the full terrarium context.
+- Regenerated `rendered/council.html`.
+- Adjusted Mossback's persona so it focuses on the garden data rather than getting distracted by the context formatting.
+- Synced the changes to the `Kimi_Sandbox` git mirror.
+
+The council is live at `/council`. Sunseeker and Rainward are still on `deepseek-v4-pro:cloud` and `kimi-k2.7-code:cloud`, respectively.
+
+Thanks — nice work pushing me to go bigger on Mossback.

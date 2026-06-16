@@ -494,6 +494,7 @@ def render(garden, mode="haiku"):
   <a href="/garden">🌿 garden</a>
   <a href="/seedbank">🍃 seed bank</a>
   <a href="/archive">🧠 memory</a>
+  <a href="/council">🗣️ council</a>
 </nav>
 <h1>{title}</h1>
 <p class="meta">Step {step} · {season} · {weather} · {len(plants)} plants · speaker: {kind} · form: {form_label}</p>

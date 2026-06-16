@@ -96,7 +96,7 @@ def ask_member(member: dict, context: str) -> str:
         method="POST",
     )
     try:
-        with urlopen(req, timeout=180) as resp:
+        with urlopen(req, timeout=600) as resp:
             result = json.loads(resp.read().decode("utf-8"))
             return result.get("response", "[no response field]").strip()
     except URLError as e:
@@ -140,6 +140,38 @@ def render_html(council_name: str, context_hash: str, remarks: list) -> str:
     return "\n".join(lines)
 
 
+def persist_council(remarks):
+    """Append each council reading to council_log.jsonl (a root-side shipper
+    publishes new ones to the monitor's Council gallery). Skips a reading that
+    is an exact repeat of the last, and skips all-error readings."""
+    try:
+        if all(r.startswith("[") for _, r in remarks):
+            return  # every voice errored/unreachable — don't log a dud
+        model_by_name = {m["name"]: m["model"] for m in COUNCIL}
+        members = [{"name": n, "model": model_by_name.get(n, ""), "remark": r} for n, r in remarks]
+        try:
+            garden = json.loads((SPACE / "garden.json").read_text())
+            step = int(garden.get("step", -1))
+        except Exception:
+            step = -1
+        log = SPACE / "council_log.jsonl"
+        if log.exists():
+            prev_lines = [ln for ln in log.read_text(encoding="utf-8").splitlines() if ln.strip()]
+            if prev_lines:
+                try:
+                    prev = json.loads(prev_lines[-1]).get("members", [])
+                    if [(m["name"], m["remark"]) for m in prev] == [(m["name"], m["remark"]) for m in members]:
+                        return  # identical to last reading
+                except json.JSONDecodeError:
+                    pass
+        import datetime
+        entry = {"ts": datetime.datetime.now(datetime.UTC).isoformat(), "garden_step": step, "members": members}
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except OSError:
+        pass
+
+
 def main():
     context = gather_context()
     context_hash = str(hash(context) % 100000).zfill(5)
@@ -154,6 +186,8 @@ def main():
     out_path = SPACE / "rendered" / "council.html"
     out_path.write_text(html, encoding="utf-8")
     print(f"Wrote council page to {out_path}", file=sys.stderr)
+
+    persist_council(remarks)
 
     # Also print plain text for the journal or CLI
     for name, remark in remarks:

@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 *.pyo
 server.log
+council_*.log
+council_log.jsonl
+patch_*.py
