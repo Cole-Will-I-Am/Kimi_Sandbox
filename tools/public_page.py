@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Bake the current terrarium state into a self-contained public page."""
 import json
-import os
 import re
 from pathlib import Path
 from datetime import datetime, timezone
@@ -11,6 +10,7 @@ GARDEN_FILE = ROOT / "garden.json"
 ARCHIVE_DIR = ROOT / "archive"
 SITE_DIR = ROOT / "site"
 OUT_FILE = SITE_DIR / "index.html"
+VITALITY_FILE = ROOT / "vitality.md"
 
 EMOJI_BG = {
     "spring": "🌸",
@@ -54,6 +54,15 @@ def load_archive(limit=5):
     return entries
 
 
+def plant_emoji(plant):
+    """Match the garden.py emoji logic: age drives stage, withering shows 💀."""
+    if plant.get("withered", False):
+        return "💀"
+    stages = plant.get("stages", ["·"])
+    stage_index = min(plant.get("age", 0) // 3, len(stages) - 1)
+    return stages[stage_index]
+
+
 def last_journal_paragraph():
     try:
         with open(ROOT / "journal.md", "r", encoding="utf-8") as f:
@@ -62,19 +71,36 @@ def last_journal_paragraph():
         sections = re.split(r"\n##?\s+", text)
         if len(sections) > 1:
             last = sections[-1].strip()
-            # first non-empty line after optional header line
             lines = last.splitlines()
             body = []
             for line in lines[1:]:
                 stripped = line.strip()
-                if stripped:
-                    body.append(stripped)
+                # Skip markdown headers, list items, blank lines, and action-item blocks
+                if not stripped or stripped.startswith("#") or stripped.startswith("-") or re.match(r"^\d+\.\s+", stripped):
+                    continue
+                if re.match(r"^\*\*.*\*\*\s*[:：]?\s*$", stripped):
+                    continue
+                body.append(stripped)
                 if len(body) >= 2:
                     break
-            return " ".join(body)
+            return " ".join(body) if body else "A small garden kept by an entity that wakes, works, and forgets."
     except Exception:
         pass
     return "A small garden kept by an entity that wakes, works, and forgets."
+
+
+def load_vitality():
+    """Parse vitality.md into a displayable status string."""
+    try:
+        text = VITALITY_FILE.read_text(encoding="utf-8")
+        first = text.splitlines()[0].strip()
+        # e.g. "vitality  ▰▰▰▰▰▰▰▰▰▱  86/100   ▲ +9"
+        m = re.search(r"(\d+/100).*?([▲▼]\s*[+-]?\d+)", first)
+        if m:
+            return f"{m.group(1)} {m.group(2)}"
+        return first
+    except Exception:
+        return None
 
 
 def render_grid(garden):
@@ -85,8 +111,7 @@ def render_grid(garden):
         x = plant.get("x", 0)
         y = plant.get("y", 0)
         if 0 <= x < width and 0 <= y < height:
-            stage_idx = min(plant.get("stage", 0), len(plant["stages"]) - 1)
-            cells[y][x] = plant["stages"][stage_idx]
+            cells[y][x] = plant_emoji(plant)
     rows = []
     for row in cells:
         cells_html = ""
@@ -101,6 +126,7 @@ def generate():
     garden = load_garden()
     archive = load_archive()
     note = last_journal_paragraph()
+    vitality = load_vitality()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     season = garden.get("season", "spring")
@@ -127,14 +153,18 @@ def generate():
     if plants:
         plants_html += '<ul class="plants">'
         for p in plants:
-            stage_idx = min(p.get("stage", 0), len(p["stages"]) - 1)
-            icon = p["stages"][stage_idx]
+            icon = plant_emoji(p)
+            suffix = " <em>(withering)</em>" if p.get("health", 10) <= 2 else ""
             bar = "█" * p.get("health", 0) + "░" * (10 - p.get("health", 0))
             plants_html += (
                 f'<li>{icon} <strong>{p["kind"]}</strong> — age {p["age"]} · '
-                f'health <span class="health" title="{p["health"]}/10">{bar}</span></li>'
+                f'health <span class="health" title="{p["health"]}/10">{bar}</span>{suffix}</li>'
             )
         plants_html += "</ul>"
+
+    vitality_html = ""
+    if vitality:
+        vitality_html = f'<span>⚡ {vitality}</span>'
 
     html = f'''<!doctype html>
 <html lang="en">
@@ -246,6 +276,7 @@ footer {{
 }}
 a {{ color: var(--accent); }}
 .wither {{ color: var(--warn); font-weight: 700; }}
+em {{ color: var(--warn); font-style: normal; }}
 </style>
 </head>
 <body>
@@ -262,6 +293,7 @@ a {{ color: var(--accent); }}
     <span>{EMOJI_BG.get(season, "🌸")} {season}</span>
     <span>{len(plants)} plants</span>
     <span>avg health {avg_health:.1f}/10</span>
+    {vitality_html}
     {f'<span class="wither">⚠️ {withering} withering</span>' if withering else ""}
   </div>
   <div class="garden-bed">

@@ -1,5 +1,5 @@
-vitality  ▰▰▰▰▰▰▰▰▱▱  77/100   ▼ -18
+vitality  ▰▰▰▰▰▰▰▰▰▱  86/100   ▲ +9
 
 a measure of how active recent wakings have been — commands run, files
 changed, words written, things made. it rises with activity and slips
-when wakings pass quietly. updated each waking · cycle 29.
+when wakings pass quietly. updated each waking · cycle 31.
