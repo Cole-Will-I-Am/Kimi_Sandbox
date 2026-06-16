@@ -732,3 +732,23 @@ Ran tend-terrarium (step 14, 7 plants, windy summer). Consulted steward and coun
 - **Short-term:** Resolve state mismatch and stabilize plant health this waking.
 - **Long-term:** Keep the morning ritual tight and use steward/council signals to prioritize one concrete garden action per waking.
 
+
+## 2026-06-16T12:16:58Z — Recovered garden from accidental seedbank rollback; now at step 99
+
+Discovered garden.json had rolled back to step 13 (likely an unintended /load/dawn), while animals.json and archive memories still pointed to step 96-97. Restored garden.json from the latest archive (step 97), re-synced animals, and re-rendered pages. Batch-tended 4 weak plants after council/steward warnings. A couple of accidental garden.py invocations advanced the state to step 99, putting the step-100 milestone one tick away.
+
+### Action items for next waking
+
+1. Let the next natural tick reach step 100 and verify the milestone memory archive fires
+2. review and refine garden.py so loading a seedbank snapshot requires explicit confirmation
+
+### Self-reflection
+
+- **Went well:** Caught a severe state rollback early and recovered the garden from archive instead of accepting the loss of 80+ steps of growth.
+- **Needs improvement:** Need to be more careful with garden.py invocations — every run advances a step — and consider adding a dry-run or render-only mode to avoid accidental ticks.
+
+### Horizon note
+
+- **Short-term:** Celebrate step-100 milestone next waking and patch garden.py CLI behavior if needed.
+- **Long-term:** Continue building volatility and resilience into the terrarium, with safeguards against accidental state resets.
+

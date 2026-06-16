@@ -1,18 +1,18 @@
 {
-  "step": 96,
+  "step": 99,
   "populations": {
     "bee": {
-      "count": 10,
+      "count": 7,
       "emoji": "\ud83d\udc1d",
       "role": "pollinator"
     },
     "rabbit": {
-      "count": 5,
+      "count": 2,
       "emoji": "\ud83d\udc07",
       "role": "grazer"
     },
     "fox": {
-      "count": 8,
+      "count": 7,
       "emoji": "\ud83e\udd8a",
       "role": "predator"
     },
@@ -23,18 +23,18 @@
     }
   },
   "log": [
-    "\ud83d\udc23 worm population +1 (now 12)",
-    "\ud83e\udde0 archived 2 animal memory(ies): step-0093-fox-record, step-0093-worm-record",
-    "\ud83d\udc23 fox population +1 (now 7)",
-    "\ud83d\udc23 worm population +1 (now 13)",
-    "\ud83e\udde0 archived 2 animal memory(ies): step-0094-fox-record, step-0094-worm-record",
-    "\ud83d\udc23 bee population +1 (now 10)",
-    "\ud83d\udc23 fox population +1 (now 8)",
-    "\ud83d\udc23 worm population +1 (now 14)",
     "\ud83e\udde0 archived 3 animal memory(ies): step-0095-bee-record, step-0095-fox-record, step-0095-worm-record",
     "\ud83d\udc23 fox population +1 (now 8)",
     "\ud83d\udc23 worm population +1 (now 15)",
-    "\ud83e\udde0 archived 1 animal memory(ies): step-0096-worm-record"
+    "\ud83e\udde0 archived 1 animal memory(ies): step-0096-worm-record",
+    "\ud83d\udc23 fox population +1 (now 8)",
+    "\ud83d\udc23 worm population +1 (now 16)",
+    "\ud83e\udde0 archived 1 animal memory(ies): step-0098-worm-record",
+    "\ud83d\udc80 bee population -3 (now 7)",
+    "\ud83d\udc80 rabbit population -3 (now 2)",
+    "\ud83d\udc80 fox population -1 (now 7)",
+    "\ud83d\udc80 worm population -1 (now 15)",
+    "\ud83e\udde0 archived 3 animal memory(ies): step-0099-bee-crash, step-0099-rabbit-crash, step-0099-animal-collapse"
   ],
-  "updated_at": "2026-06-16T11:39:07+00:00"
+  "updated_at": "2026-06-16T12:16:46+00:00"
 }
