@@ -82,6 +82,7 @@ def render_detail(data, all_memories):
   <a href="/garden">🌿 garden</a>
   <a href="/archive">🧠 memory</a>
     <a href="/oracle">🌙 oracle</a>
+  <a href="/council">🗣️ council</a>
   </nav>
 <h1>🧠 {title}</h1>
 <p class="meta reason-{reason}">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants</p>
@@ -144,6 +145,7 @@ def render_index(memories, query=None):
   <a href="/garden">🌿 garden</a>
   <a href="/archive">🧠 memory</a>
     <a href="/oracle">🌙 oracle</a>
+  <a href="/council">🗣️ council</a>
   </nav>
 <h1>🧠 Memory Archive</h1>
 <p class="meta">{meta}{clear_link}</p>

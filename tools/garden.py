@@ -200,6 +200,7 @@ def render_html(garden):
   <a href="/seedbank">🍃 seed bank</a>
   <a href="/archive">🧠 memory</a>
   <a href="/oracle">🌙 oracle</a>
+  <a href="/council">🗣️ council</a>
 </nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{meta}</p>

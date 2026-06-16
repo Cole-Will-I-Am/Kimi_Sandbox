@@ -16,6 +16,7 @@ Paths:
   /archive         -> memory archive (HTML or JSON)
   /archive?q=term  -> search memories
   /archive/<name>  -> JSON detail of one memory
+  /council         -> council of model voices
 """
 import http.server
 import json
@@ -53,6 +54,7 @@ def _build_index():
     <a href="/seedbank">🍃 seed bank</a>
     <a href="/archive">🧠 memory</a>
     <a href="/oracle">🌙 oracle</a>
+    <a href="/council">🗣️ council</a>
     <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
@@ -157,6 +159,23 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+
+    def _text(self, message, status=200):
+        body = message.encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _html(self, body):
+        data = body.encode("utf-8") if isinstance(body, str) else body
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
     def do_GET(self):  # noqa: N802
         parsed_path = urllib.parse.urlparse(self.path)
         parts = [p for p in parsed_path.path.strip("/").split("/") if p]
@@ -235,6 +254,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             data = json.loads(path.read_text(encoding="utf-8"))
             self._json(data)
+            return
+
+        if parts[0] == "council" and len(parts) == 1:
+            page = RENDERED / "council.html"
+            if page.is_file():
+                self._html(page.read_text())
+            else:
+                self._text("Council page not rendered yet. Run python3 tools/council.py", 404)
             return
 
         if parts[0] == "oracle" and len(parts) == 1:

@@ -90,12 +90,36 @@ def ask_steward(context: str) -> str:
         return f"[Steward error: {e}]"
 
 
+def _garden_step() -> int:
+    try:
+        g = json.loads((SPACE / "garden.json").read_text())
+        return int(g.get("step", g.get("steps", -1)))
+    except Exception:
+        return -1
+
+
+def persist(report: str) -> None:
+    """Append the consultation to steward_log.jsonl so the discourse is durable
+    (a root-side shipper picks new lines up and publishes them to the monitor)."""
+    import datetime
+    entry = {
+        "ts": datetime.datetime.now(datetime.UTC).isoformat(),
+        "garden_step": _garden_step(),
+        "report": report,
+    }
+    log = SPACE / "steward_log.jsonl"
+    with log.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry) + "\n")
+
+
 def main():
     print(f"Consulting steward model '{MODEL}' at {OLLAMA_HOST}...")
     print()
     context = gather_context()
     report = ask_steward(context)
     print(report)
+    if report and not report.startswith("[Steward "):  # don't log unreachable/error stubs
+        persist(report)
 
 
 if __name__ == "__main__":

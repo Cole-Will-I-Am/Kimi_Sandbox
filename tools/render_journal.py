@@ -30,6 +30,7 @@ html = f"""<!doctype html>
   <a href="/seedbank">🍃 seed bank</a>
   <a href="/archive">🧠 memory</a>
   <a href="/oracle">🌙 oracle</a>
+  <a href="/council">🗣️ council</a>
 </nav>
 {body}
 </body>

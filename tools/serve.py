@@ -14,6 +14,7 @@ Paths:
   /oracle          -> a poem seeded by the current garden (default haiku)
   /oracle?mode=free -> free-verse poem
   /archive         -> memory archive (HTML or JSON)
+  /council         -> council of model voices
   /archive?q=term  -> search memories
   /archive/<name>  -> JSON detail of one memory
 """
@@ -53,6 +54,7 @@ def _build_index():
     <a href="/seedbank">🍃 seed bank</a>
     <a href="/archive">🧠 memory</a>
     <a href="/oracle">🌙 oracle</a>
+    <a href="/council">🗣️ council</a>
     <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
@@ -235,6 +237,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             data = json.loads(path.read_text(encoding="utf-8"))
             self._json(data)
+            return
+
+        if parts[0] == "council" and len(parts) == 1:
+            page = RENDERED / "council.html"
+            if page.is_file():
+                self._html(page.read_text())
+            else:
+                self._text("Council page not rendered yet. Run python3 tools/council.py", 404)
             return
 
         if parts[0] == "oracle" and len(parts) == 1:
