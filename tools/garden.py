@@ -39,12 +39,90 @@ KINDS = [
 
 KIND_BY_NAME = {k["kind"]: k for k in KINDS}
 
+# Weather engine: common conditions + occasional volatile events.
+# Each entry: (emoji name, base_health_delta, {kind: extra_delta}, persistence_weight)
 WEATHERS = [
-    ("☀️ sunny", 0),
-    ("🌧️ rainy", 1),
-    ("💨 windy", -1),
-    ("☁️ cloudy", 0),
+    ("☀️ sunny", 0, {}, 1),
+    ("🌧️ rainy", 1, {"moss": 1, "fern": 0, "flower": 0, "cactus": -1, "tree": 0}, 1),
+    ("💨 windy", -1, {"tree": -1, "flower": -1, "moss": 0, "fern": 0, "cactus": 0}, 1),
+    ("☁️ cloudy", 0, {}, 1),
 ]
+
+# Volatile weather events: stronger, kind-specific effects. The garden must recover.
+WEATHER_EVENTS = {
+    "drought": {
+        "name": "🌵 drought",
+        "delta": -1,
+        "kind_delta": {"cactus": 1, "moss": -1, "fern": -1, "flower": -1, "tree": 0},
+        "weight": 2,
+        "message": "parched soil tests every root",
+    },
+    "storm": {
+        "name": "⛈️ storm",
+        "delta": -1,
+        "kind_delta": {"tree": -1, "flower": -1, "fern": -1, "moss": 0, "cactus": 0},
+        "weight": 2,
+        "message": "wind and rain lash the garden",
+    },
+    "frost": {
+        "name": "❄️ frost",
+        "delta": -1,
+        "kind_delta": {"cactus": 1, "moss": 0, "fern": -1, "flower": -1, "tree": -1},
+        "weight": 1,
+        "message": "a cold snap bites the tender growth",
+    },
+}
+
+EVENT_CHANCE = 0.18  # ~18% chance per tick for a volatile event (drought/storm/frost)
+RECOVERY_BIAS = 0.75  # after a volatile event, next tick favors calm/recovery weather
+
+
+def roll_weather(previous=None):
+    """Choose today's weather. Volatile events are uncommon but consequential."""
+    if previous and previous.get("key") != "normal":
+        # Recovery: after a shock, the next day is much more likely to be calm.
+        if random.random() < RECOVERY_BIAS:
+            name, delta, kind_delta, weight = random.choices(
+                [("☀️ sunny", 0, {}, 1), ("🌧️ rainy", 1, {"moss": 1, "fern": 0, "flower": 0, "cactus": -1, "tree": 0}, 1)],
+                weights=[1, 1],
+                k=1,
+            )[0]
+            return {"key": "normal", "name": name, "delta": delta, "kind_delta": kind_delta, "message": ""}
+    if random.random() < EVENT_CHANCE:
+        key = random.choices(
+            list(WEATHER_EVENTS),
+            weights=[e["weight"] for e in WEATHER_EVENTS.values()],
+            k=1,
+        )[0]
+        event = WEATHER_EVENTS[key].copy()
+        event["key"] = key
+        return event
+    # Normal weather.
+    name, delta, kind_delta, weight = random.choices(
+        WEATHERS, weights=[w for _, _, _, w in WEATHERS], k=1
+    )[0]
+    return {"key": "normal", "name": name, "delta": delta, "kind_delta": kind_delta, "message": ""}
+
+
+def apply_weather(garden, weather):
+    """Apply weather health changes to all living plants and return a summary note."""
+    notes = []
+    for plant in garden["plants"]:
+        if plant.get("withered", False):
+            continue
+        base = weather["delta"]
+        extra = weather.get("kind_delta", {}).get(plant["kind"], 0)
+        # Add a small natural jitter.
+        jitter = random.choice([-1, 0, 0, 0, 1])
+        total = base + extra + jitter
+        plant["health"] = max(0, min(10, plant["health"] + total))
+        if plant["health"] == 0:
+            plant["withered"] = True
+    if weather["key"] == "normal":
+        notes.append(f"{weather['name']} {season(garden['step'])}")
+    else:
+        notes.append(f"{weather['name']} {season(garden['step'])} — {weather['message']}")
+    return notes
 
 
 def load_garden():
@@ -182,6 +260,11 @@ def render_html(garden):
 
     latest = garden["log"][-1] if garden["log"] else ""
     meta = latest.split(" — ", 1)[1] if " — " in latest else ""
+    weather = garden.get("weather")
+    if weather:
+        weather_banner = f"<p class='weather'>Current weather: {weather['name']}</p>\n"
+    else:
+        weather_banner = ""
 
     html = f"""<!doctype html>
 <html lang="en">
@@ -204,7 +287,7 @@ def render_html(garden):
 </nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{meta}</p>
-{wither_banner}<div class="garden-bed">
+{weather_banner}{wither_banner}<div class="garden-bed">
 {rows_html}
 </div>
 <h2>Plants</h2>
@@ -256,8 +339,9 @@ def tick(garden, water=False, plant_args=None):
         archived.append(archive_moment(garden, "rebirth"))
 
     # Weather for this step.
-    weather, weather_health = random.choice(WEATHERS)
-    notes.append(f"{weather} {season(step)}")
+    weather = roll_weather(garden.get("weather"))
+    garden["weather"] = weather
+    notes.extend(apply_weather(garden, weather))
 
     if water:
         watered = 0
@@ -291,12 +375,9 @@ def tick(garden, water=False, plant_args=None):
         })
         notes.append(f"🌱 planted {kind_name} at ({x},{y})")
 
-    # Age existing plants and nudge health from weather.
+    # Age existing plants.
     for plant in garden["plants"]:
         plant["age"] += 1
-        plant["health"] = max(0, min(10, plant["health"] + weather_health + random.choice([-1, 0, 0, 1])))
-        if plant["health"] == 0:
-            plant["withered"] = True
 
     # Maybe a new seedling appears naturally.
     if not garden["plants"] or random.random() < 0.45:

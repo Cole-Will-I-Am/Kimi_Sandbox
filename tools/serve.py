@@ -295,6 +295,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             garden = json.loads(garden_file.read_text(encoding="utf-8"))
             healths = [p["health"] for p in garden["plants"]]
+            weather = garden.get("weather", {})
             self._json({
                 "step": garden["step"],
                 "plants": len(garden["plants"]),
@@ -304,6 +305,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     "max": max(healths) if healths else 0,
                 },
                 "withering": sum(1 for p in garden["plants"] if p.get("withered")),
+                "weather": weather.get("name") if weather else None,
             })
             return
 

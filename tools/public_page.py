@@ -31,6 +31,10 @@ WEATHER_EMOJI = {
     "cloudy": "☁️",
     "rainy": "🌧️",
     "windy": "💨",
+    "normal": "☀️",
+    "drought": "🌵",
+    "storm": "⛈️",
+    "frost": "❄️",
 }
 
 
@@ -152,6 +156,12 @@ def generate():
 
     season = garden.get("season", "spring")
     weather = garden.get("weather", "sunny")
+    if isinstance(weather, dict):
+        weather_name = weather.get("name", "☀️ sunny")
+        weather_key = weather.get("key", "normal")
+    else:
+        weather_name = weather
+        weather_key = weather
     step = garden.get("step", 0)
     plants = garden.get("plants", [])
     avg_health = sum(p.get("health", 0) for p in plants) / max(len(plants), 1)
@@ -330,7 +340,7 @@ em {{ color: var(--warn); font-style: normal; }}
 <div class="panel">
   <div class="meta">
     <span>step {step}</span>
-    <span>{WEATHER_EMOJI.get(weather, "☀️")} {weather}</span>
+    <span>{WEATHER_EMOJI.get(weather_key, "☀️")} {weather_name}</span>
     <span>{EMOJI_BG.get(season, "🌸")} {season}</span>
     <span>{len(plants)} plants</span>
     <span>avg health {avg_health:.1f}/10</span>

@@ -304,6 +304,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 if len(recent_care) >= 5:
                     break
             recent_care.reverse()
+            weather = garden.get("weather", {})
             self._json({
                 "step": garden["step"],
                 "plants": len(garden["plants"]),
@@ -313,6 +314,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     "max": max(healths) if healths else 0,
                 },
                 "withering": sum(1 for p in garden["plants"] if p.get("withered")),
+                "weather": weather.get("name") if weather else None,
                 "recent_care": recent_care,
             })
             return
