@@ -14,9 +14,10 @@ Paths:
   /oracle          -> a poem seeded by the current garden (default haiku)
   /oracle?mode=free -> free-verse poem
   /archive         -> memory archive (HTML or JSON)
-  /council         -> council of model voices
   /archive?q=term  -> search memories
   /archive/<name>  -> JSON detail of one memory
+  /council         -> council of model voices
+  /animals         -> animal populations and recent events
 """
 import http.server
 import json
@@ -38,7 +39,22 @@ ARCHIVE = ROOT / "archive"
 NAME_RE = re.compile(r"^[A-Za-z0-9_\-]+$")
 
 
+def _animal_summary():
+    animals_file = ROOT / "animals.json"
+    if not animals_file.exists():
+        return {}
+    data = json.loads(animals_file.read_text(encoding="utf-8"))
+    return {
+        "step": data.get("step", 0),
+        "populations": {
+            name: {"count": info.get("count", 0), "emoji": info.get("emoji", "🐾"), "role": info.get("role", "creature")}
+            for name, info in data.get("populations", {}).items()
+        },
+    }
+
+
 def _build_index():
+
     html = """<!doctype html>
 <html lang="en">
 <head>
@@ -55,6 +71,7 @@ def _build_index():
     <a href="/archive">🧠 memory</a>
     <a href="/oracle">🌙 oracle</a>
     <a href="/council">🗣️ council</a>
+    <a href="/animals">🐾 animals</a>
     <a href="/status">📊 status</a>
     <a class="button" href="/grow">🌱 grow (+1)</a>
   </nav>
@@ -117,6 +134,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             cmd += ["--query", query]
         subprocess.run(cmd, check=True)
 
+    def _run_animals(self, extra=None):
+        cmd = [sys.executable, str(ROOT / "tools" / "animals.py")]
+        if extra:
+            cmd += extra
+        subprocess.run(cmd, check=True)
+
     def _redirect(self, location):
         self.send_response(302)
         self.send_header("Location", location)
@@ -157,6 +180,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return True
         return False
 
+    def _bad(self, message):
+        body = message.encode("utf-8")
+        self.send_response(400)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+
     def _text(self, message, status=200):
         body = message.encode("utf-8")
         self.send_response(status)
@@ -172,14 +204,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
-
-    def _bad(self, message):
-        body = message.encode("utf-8")
-        self.send_response(400)
-        self.send_header("Content-Type", "text/plain; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
 
     def do_GET(self):  # noqa: N802
         parsed_path = urllib.parse.urlparse(self.path)
@@ -296,6 +320,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             garden = json.loads(garden_file.read_text(encoding="utf-8"))
             healths = [p["health"] for p in garden["plants"]]
+            log = garden.get("log", [])
+            recent_care = []
+            for entry in reversed(log[-10:]):
+                if "tended" in entry.lower() or "water" in entry.lower() or "watered" in entry.lower():
+                    recent_care.append(entry)
+                if len(recent_care) >= 5:
+                    break
+            recent_care.reverse()
             weather = garden.get("weather", {})
             self._json({
                 "step": garden["step"],
@@ -307,7 +339,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 },
                 "withering": sum(1 for p in garden["plants"] if p.get("withered")),
                 "weather": weather.get("name") if weather else None,
+                "recent_care": recent_care,
+                "animals": _animal_summary(),
             })
+            return
+
+        if parts[0] == "animals" and len(parts) == 1:
+            page = RENDERED / "animals.html"
+            if page.is_file():
+                self._html(page.read_text())
+            else:
+                self._text("Animals page not rendered yet. Run python3 tools/animals.py", 404)
             return
 
         if parts[0] == "plant" and len(parts) == 3:
@@ -386,6 +428,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             self._run_garden(["--batch-tend", threshold])
             self._redirect("/garden")
+            return
+
+        if parts[0] == "tick-animals" and len(parts) == 1:
+            self._run_animals()
+            self._redirect("/animals")
             return
 
         self._bad("unknown POST path")

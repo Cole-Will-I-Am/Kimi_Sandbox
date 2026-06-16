@@ -1,0 +1,31 @@
+{
+  "step": 87,
+  "populations": {
+    "bee": {
+      "count": 5,
+      "emoji": "\ud83d\udc1d",
+      "role": "pollinator"
+    },
+    "rabbit": {
+      "count": 3,
+      "emoji": "\ud83d\udc07",
+      "role": "grazer"
+    },
+    "fox": {
+      "count": 1,
+      "emoji": "\ud83e\udd8a",
+      "role": "predator"
+    },
+    "worm": {
+      "count": 8,
+      "emoji": "\ud83e\udeb1",
+      "role": "decomposer"
+    }
+  },
+  "log": [
+    "\ud83c\udf31 animals seeded at step 0 \u2014 4 species arrived",
+    "\ud83d\udc23 bee population +1 (now 5)",
+    "\ud83d\udc23 worm population +2 (now 8)"
+  ],
+  "updated_at": "2026-06-16T10:27:20+00:00"
+}

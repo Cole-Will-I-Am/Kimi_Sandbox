@@ -284,6 +284,7 @@ def render_html(garden):
   <a href="/archive">🧠 memory</a>
   <a href="/oracle">🌙 oracle</a>
   <a href="/council">🗣️ council</a>
+  <a href="/animals">🐾 animals</a>
 </nav>
 <h1>🌿 Terrarium Garden — Step {step}</h1>
 <p class="meta">{meta}</p>

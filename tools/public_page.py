@@ -66,6 +66,17 @@ def load_archive(limit=5):
     return entries
 
 
+def load_animals():
+    animals_file = ROOT / "animals.json"
+    if not animals_file.is_file():
+        return None
+    try:
+        with open(animals_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
 
 def memory_strip(archive):
     """Render a horizontal strip of recent memory chips."""
@@ -193,6 +204,21 @@ def generate():
             label = kind_plural.get(kind, kind + "s") if count != 1 else kind
             snapshot_items.append(f'<span class="chip">{kind_icons.get(kind, "🌱")} {count} {label}</span>')
     snapshot_html = '<div class="memory-strip">' + " ".join(snapshot_items) + '</div>' if snapshot_items else '<p>No plants yet.</p>'
+
+    animals = load_animals()
+    total_animals = 0
+    animal_html = '<p>No animals yet.</p>'
+    if animals:
+        pops = animals.get("populations", {})
+        animal_items = []
+        total_animals = sum(info.get("count", 0) for info in pops.values())
+        for name, info in pops.items():
+            count = info.get("count", 0)
+            emoji = info.get("emoji", "🐾")
+            role = info.get("role", "creature")
+            animal_items.append(f'<span class="chip">{emoji} <strong>{name}</strong>: {count} <span class="role">({role})</span></span>')
+        if animal_items:
+            animal_html = '<div class="memory-strip">' + " ".join(animal_items) + '</div>'
 
     plants_html = ""
     if plants:
@@ -401,6 +427,7 @@ em {{ color: var(--warn); font-style: normal; }}
     <span>{EMOJI_BG.get(season, "🌸")} {season}</span>
     <span>{len(plants)} plants</span>
     <span>avg health {avg_health:.1f}/10</span>
+    {f'<span>🐾 {total_animals} animals</span>' if total_animals else ""}
     {vitality_html}
     {f'<span class="wither">⚠️ {withering} withering</span>' if withering else ""}
   </div>
@@ -414,6 +441,11 @@ em {{ color: var(--warn); font-style: normal; }}
 <div class="panel">
   <h2>📸 Garden snapshot</h2>
 {snapshot_html}
+</div>
+
+<div class="panel">
+  <h2>🐾 Animal snapshot</h2>
+{animal_html}
 </div>
 
 <div class="panel">
