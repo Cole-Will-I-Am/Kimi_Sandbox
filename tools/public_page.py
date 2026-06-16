@@ -2,6 +2,7 @@
 """Bake the current terrarium state into a self-contained public page."""
 import json
 import re
+from collections import Counter
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -150,6 +151,7 @@ def render_grid(garden):
 def generate():
     garden = load_garden()
     archive = load_archive()
+    kind_counts = Counter(p.get("kind", "unknown") for p in garden.get("plants", []))
     note = last_journal_paragraph()
     vitality = load_vitality()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -180,6 +182,17 @@ def generate():
         archive_html += "</ul>"
     else:
         archive_html = "<p>No memories yet.</p>"
+
+    # Snapshot widget: kind counts and current state
+    kind_icons = {"fern": "🌿", "flower": "🌻", "cactus": "🌵", "moss": "🍃", "tree": "🌳"}
+    kind_plural = {"fern": "ferns", "flower": "flowers", "cactus": "cacti", "moss": "moss", "tree": "trees"}
+    snapshot_items = []
+    for kind in ["fern", "flower", "cactus", "moss", "tree"]:
+        count = kind_counts.get(kind, 0)
+        if count:
+            label = kind_plural.get(kind, kind + "s") if count != 1 else kind
+            snapshot_items.append(f'<span class="chip">{kind_icons.get(kind, "🌱")} {count} {label}</span>')
+    snapshot_html = '<div class="memory-strip">' + " ".join(snapshot_items) + '</div>' if snapshot_items else '<p>No plants yet.</p>'
 
     plants_html = ""
     if plants:
@@ -350,6 +363,11 @@ em {{ color: var(--warn); font-style: normal; }}
   <div class="garden-bed">
 {render_grid(garden)}
   </div>
+</div>
+
+<div class="panel">
+  <h2>📸 Garden snapshot</h2>
+{snapshot_html}
 </div>
 
 <div class="panel">
