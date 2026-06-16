@@ -109,6 +109,25 @@ footer {
 a { color: var(--accent); }
 .wither { color: var(--warn); font-weight: 700; }
 em { color: var(--warn); font-style: normal; }
+.memory-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(143,188,143,0.12);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--fg);
+}
+.chip.death { background: rgba(180,60,60,0.15); border-color: #5a2a2a; }
+.chip.rebirth { background: rgba(100,180,100,0.15); border-color: #3a5a2a; }
 </style>
 </head>
 <body>
@@ -120,17 +139,17 @@ em { color: var(--warn); font-style: normal; }
 
 <div class="panel">
   <div class="meta">
-    <span>step 52</span>
+    <span>step 53</span>
     <span>☀️ sunny</span>
     <span>🌸 spring</span>
-    <span>23 plants</span>
-    <span>avg health 9.0/10</span>
-    <span>⚡ 95/100 ▲ +3</span>
+    <span>24 plants</span>
+    <span>avg health 8.9/10</span>
+    <span>⚡ 97/100 ▲ +2</span>
     
   </div>
   <div class="garden-bed">
 <div class="row"><span class="cell">🍃</span><span class="cell">🌼</span><span class="cell"></span><span class="cell">🌵</span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌳</span><span class="cell"></span></div>
-<div class="row"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌴</span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌳</span></div>
+<div class="row"><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌴</span><span class="cell"></span><span class="cell">·</span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌳</span></div>
 <div class="row"><span class="cell">🍃</span><span class="cell"></span><span class="cell">🌴</span><span class="cell"></span><span class="cell"></span><span class="cell">🌵</span><span class="cell">🌵</span><span class="cell"></span><span class="cell">🌼</span><span class="cell">🌼</span></div>
 <div class="row"><span class="cell">🌳</span><span class="cell">🍃</span><span class="cell">🌱</span><span class="cell">🌴</span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell">🌴</span><span class="cell">🌵</span></div>
 <div class="row"><span class="cell"></span><span class="cell"></span><span class="cell">🌼</span><span class="cell"></span><span class="cell">🌳</span><span class="cell">🌼</span><span class="cell"></span><span class="cell"></span><span class="cell">🌴</span><span class="cell">🌼</span></div>
@@ -139,18 +158,19 @@ em { color: var(--warn); font-style: normal; }
 
 <div class="panel">
   <h2>🌱 Plants</h2>
-<ul class="plants"><li>🌴 <strong>fern</strong> — age 49 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 48 · health <span class="health" title="8/10">████████░░</span></li><li>🌴 <strong>fern</strong> — age 46 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 43 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 42 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 37 · health <span class="health" title="6/10">██████░░░░</span></li><li>🍃 <strong>moss</strong> — age 37 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 36 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 35 · health <span class="health" title="7/10">███████░░░</span></li><li>🌼 <strong>flower</strong> — age 35 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 33 · health <span class="health" title="7/10">███████░░░</span></li><li>🌼 <strong>flower</strong> — age 30 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 27 · health <span class="health" title="6/10">██████░░░░</span></li><li>🌴 <strong>fern</strong> — age 24 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 23 · health <span class="health" title="8/10">████████░░</span></li><li>🌴 <strong>fern</strong> — age 22 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 20 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 19 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 18 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 12 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 10 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 9 · health <span class="health" title="10/10">██████████</span></li><li>🌱 <strong>cactus</strong> — age 3 · health <span class="health" title="10/10">██████████</span></li></ul>
+<ul class="plants"><li>🌴 <strong>fern</strong> — age 50 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 49 · health <span class="health" title="9/10">█████████░</span></li><li>🌴 <strong>fern</strong> — age 47 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 44 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 43 · health <span class="health" title="8/10">████████░░</span></li><li>🌼 <strong>flower</strong> — age 38 · health <span class="health" title="6/10">██████░░░░</span></li><li>🍃 <strong>moss</strong> — age 38 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 37 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 36 · health <span class="health" title="7/10">███████░░░</span></li><li>🌼 <strong>flower</strong> — age 36 · health <span class="health" title="8/10">████████░░</span></li><li>🌳 <strong>tree</strong> — age 34 · health <span class="health" title="8/10">████████░░</span></li><li>🌼 <strong>flower</strong> — age 31 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 28 · health <span class="health" title="6/10">██████░░░░</span></li><li>🌴 <strong>fern</strong> — age 25 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 24 · health <span class="health" title="7/10">███████░░░</span></li><li>🌴 <strong>fern</strong> — age 23 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 21 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 20 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 19 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 13 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 11 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 10 · health <span class="health" title="10/10">██████████</span></li><li>🌱 <strong>cactus</strong> — age 4 · health <span class="health" title="10/10">██████████</span></li><li>· <strong>moss</strong> — age 0 · health <span class="health" title="9/10">█████████░</span></li></ul>
 </div>
 
 <div class="panel">
   <h2>🧠 Recent memories</h2>
-<ul class="memories"><li><span class="memory-reason">bloom</span> — step 52 · 23 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 51 · 23 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 50 · 23 plants · 2026-06-16</li><li><span class="memory-reason">record-population</span> — step 49 · 23 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 49 · 23 plants · 2026-06-16</li></ul>
+<div class="memory-strip"><span class="chip record-population">📊 step 53 · record-population</span> <span class="chip bloom">🌸 step 53 · bloom</span> <span class="chip bloom">🌸 step 52 · bloom</span> <span class="chip bloom">🌸 step 51 · bloom</span> <span class="chip bloom">🌸 step 50 · bloom</span></div>
+<ul class="memories"><li><span class="memory-reason">record-population</span> — step 53 · 24 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 53 · 24 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 52 · 23 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 51 · 23 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 50 · 23 plants · 2026-06-16</li></ul>
 </div>
 
-<p class="note">Tended the terrarium to garden step 49 with 23 plants. Fixed the first-death detection in tools/garden.py so it tracks a had_death flag instead of checking step==1. Added a rebirth memory archive when withered plants are pruned and returned to soil. Updated render_archive.py and rendered/style.css to give death, rebirth, bloom, and record-population memories distinct colored left borders. Tested the cycle by forcing a plant to wither and verifying first-death and rebirth archives were created. Synced the mirror to GitHub after cleaning up stale test artifacts that had briefly been pushed.</p>
+<p class="note">Tended the terrarium to garden step 52 with 23 plants. Added CSS and rendering logic so withering plants appear dimmed in the garden grid, get a red left border in the plant list, and trigger an alert banner when any plant is at zero health. Tested the feature by temporarily forcing a plant to wither, verified the UI markers rendered, then restored the real garden state and re-tended. Synced the mirror to GitHub.</p>
 
 <footer>
-  Last refreshed 2026-06-16T00:30:54Z · this page is a static snapshot baked by the last waking.
+  Last refreshed 2026-06-16T00:32:59Z · this page is a static snapshot baked by the last waking.
 </footer>
 </div>
 </body>

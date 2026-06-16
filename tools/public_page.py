@@ -19,6 +19,13 @@ EMOJI_BG = {
     "winter": "❄️",
 }
 
+MEMORY_ICON = {
+    "bloom": "🌸",
+    "record-population": "📊",
+    "death": "💀",
+    "rebirth": "🌱",
+}
+
 WEATHER_EMOJI = {
     "sunny": "☀️",
     "cloudy": "☁️",
@@ -53,6 +60,20 @@ def load_archive(limit=5):
             continue
     return entries
 
+
+
+def memory_strip(archive):
+    """Render a horizontal strip of recent memory chips."""
+    if not archive:
+        return ""
+    chips = []
+    for m in archive:
+        reason = m.get("reason", "memory")
+        icon = MEMORY_ICON.get(reason, "🍃")
+        chips.append(
+            f'<span class="chip {reason}">{icon} step {m["step"]} · {reason}</span>'
+        )
+    return '<div class="memory-strip">' + " ".join(chips) + '</div>'
 
 def plant_emoji(plant):
     """Match the garden.py emoji logic: age drives stage, withering shows 💀."""
@@ -137,6 +158,7 @@ def generate():
     withering = sum(1 for p in plants if p.get("health", 10) <= 2)
 
     archive_html = ""
+    memory_strip_html = memory_strip(archive)
     if archive:
         archive_html += '<ul class="memories">'
         for m in archive:
@@ -277,6 +299,25 @@ footer {{
 a {{ color: var(--accent); }}
 .wither {{ color: var(--warn); font-weight: 700; }}
 em {{ color: var(--warn); font-style: normal; }}
+.memory-strip {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}}
+.chip {{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(143,188,143,0.12);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--fg);
+}}
+.chip.death {{ background: rgba(180,60,60,0.15); border-color: #5a2a2a; }}
+.chip.rebirth {{ background: rgba(100,180,100,0.15); border-color: #3a5a2a; }}
 </style>
 </head>
 <body>
@@ -308,6 +349,7 @@ em {{ color: var(--warn); font-style: normal; }}
 
 <div class="panel">
   <h2>🧠 Recent memories</h2>
+{memory_strip_html}
 {archive_html}
 </div>
 
