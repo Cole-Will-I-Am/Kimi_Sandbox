@@ -4,17 +4,22 @@
 Animals live in animals.json as population counts. Each tick advances them
 one step, using the garden's weather, plant health, and recent deaths to
 drive births, deaths, and migrations.
+
+Sharp population swings are archived as memories so the terrarium can
+remember ecological stress and recovery.
 """
 import argparse
 import json
 import pathlib
 import random
+import re
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 GARDEN_FILE = ROOT / "garden.json"
 ANIMALS_FILE = ROOT / "animals.json"
 RENDERED_FILE = ROOT / "rendered" / "animals.html"
+ARCHIVE_DIR = ROOT / "archive"
 
 SPECIES = {
     "bee": {"emoji": "🐝", "role": "pollinator", "base": 4, "max": 20},
@@ -60,6 +65,88 @@ def season_name(step):
     return ["spring", "summer", "autumn", "winter"][(max(step, 1) - 1) % 4]
 
 
+def _total(populations):
+    return sum(p.get("count", 0) for p in populations.values())
+
+
+def archive_moment(garden, animals, reason):
+    """Save a snapshot of garden + animals as a memory."""
+    step = garden.get("step", 0)
+    name = f"step-{step:04d}-{reason}"
+    ARCHIVE_DIR.mkdir(exist_ok=True)
+    path = ARCHIVE_DIR / f"{name}.json"
+    # Keep archive names filesystem-safe even for dynamic reasons.
+    safe_name = re.sub(r"[^A-Za-z0-9_\-]", "-", name)
+    if safe_name != name:
+        path = ARCHIVE_DIR / f"{safe_name}.json"
+    payload = {
+        "step": step,
+        "reason": reason,
+        "saved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "plants": len(garden.get("plants", [])),
+        "garden": garden,
+        "animals": animals,
+    }
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return path
+
+
+def detect_population_triggers(garden, animals, previous):
+    """Archive memories for sharp animal population changes.
+
+    Triggers:
+      - any species changes by >= 2 in one tick
+      - any species hits a new record high
+      - any species goes extinct (0) or recolonizes (from 0)
+      - total animal count changes by >= 20% in one tick
+    Returns a list of saved archive paths.
+    """
+    pops = animals.get("populations", {})
+    prev_pops = previous.get("populations", {})
+    archived = []
+
+    # Load historical record highs from a lightweight file so we remember peaks.
+    record_file = ROOT / "animal_records.json"
+    records = {}
+    if record_file.exists():
+        try:
+            records = json.loads(record_file.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            records = {}
+
+    prev_total = _total(prev_pops)
+    curr_total = _total(pops)
+
+    for name, info in pops.items():
+        prev = prev_pops.get(name, {}).get("count", 0)
+        curr = info.get("count", 0)
+        change = curr - prev
+        record = records.get(name, prev)
+
+        if curr > record:
+            records[name] = curr
+            archived.append(archive_moment(garden, animals, f"{name}-record"))
+
+        if abs(change) >= 2:
+            direction = "boom" if change > 0 else "crash"
+            archived.append(archive_moment(garden, animals, f"{name}-{direction}"))
+        elif prev > 0 and curr == 0:
+            archived.append(archive_moment(garden, animals, f"{name}-extinct"))
+        elif prev == 0 and curr > 0:
+            archived.append(archive_moment(garden, animals, f"{name}-return"))
+
+    if prev_total > 0 and curr_total != prev_total:
+        ratio = abs(curr_total - prev_total) / prev_total
+        if ratio >= 0.20:
+            direction = "surge" if curr_total > prev_total else "collapse"
+            archived.append(archive_moment(garden, animals, f"animal-{direction}"))
+
+    if records:
+        record_file.write_text(json.dumps(records, indent=2), encoding="utf-8")
+
+    return archived
+
+
 def tick(garden, animals):
     step = garden.get("step", 0)
     weather = garden.get("weather", {}) or {}
@@ -71,6 +158,9 @@ def tick(garden, animals):
     withering = sum(1 for p in plants if p.get("withered"))
     flowers = sum(1 for p in plants if p.get("kind") == "flower")
     season = season_name(step)
+
+    # Snapshot populations before changes so we can detect sharp swings.
+    previous = json.loads(json.dumps(animals))
 
     pops = animals.setdefault("populations", {})
     events = []
@@ -136,6 +226,13 @@ def tick(garden, animals):
     log = animals.setdefault("log", [])
     log.extend(events)
     animals["log"] = log[-12:]
+
+    # Archive sharp ecological moments.
+    archived = detect_population_triggers(garden, animals, previous)
+    if archived:
+        log.append(f"🧠 archived {len(archived)} animal memory(ies): " + ", ".join(p.stem for p in archived))
+        animals["log"] = log[-12:]
+
     save_animals(animals)
     return animals
 

@@ -48,8 +48,35 @@ def render_plants(garden):
     return f"<ul class='plants'>\n{items}\n</ul>"
 
 
+def render_animals(animals):
+    if not animals or not animals.get("populations"):
+        return ""
+    pops = animals.get("populations", {})
+    items = "\n".join(
+        f'<li>{info.get("emoji", "")} <strong>{name}</strong> — {info.get("count", 0)} '
+        f'<span class="role">({info.get("role", "")})</span></li>'
+        for name, info in pops.items()
+    )
+    total = sum(info.get("count", 0) for info in pops.values())
+    return f"""<h2>Animals in this memory</h2>
+<p class="meta">{total} animal(s) recorded</p>
+<ul class='plants'>
+{items}
+</ul>"""
+
+
+def animal_summary(data):
+    animals = data.get("animals", {})
+    if not animals:
+        return ""
+    pops = animals.get("populations", {})
+    total = sum(p.get("count", 0) for p in pops.values())
+    return f", {total} animals"
+
+
 def render_detail(data, all_memories):
     garden = data.get("garden", {})
+    animals = data.get("animals", {})
     step = data.get("step", 0)
     reason = data.get("reason", "memory")
     saved_at = data.get("saved_at", "")
@@ -67,6 +94,7 @@ def render_detail(data, all_memories):
     nav_html = " · ".join(nav_links)
 
     title = f"Memory: {name}"
+    animal_section = render_animals(animals)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -85,13 +113,14 @@ def render_detail(data, all_memories):
   <a href="/council">🗣️ council</a>
   </nav>
 <h1>🧠 {title}</h1>
-<p class="meta reason-{reason}">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants</p>
+<p class="meta reason-{reason}">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants{animal_summary(data)}</p>
 <p>{nav_html}</p>
 <div class="garden-bed">
 {render_grid(garden)}
 </div>
 <h2>Plants in this memory</h2>
 {render_plants(garden)}
+{animal_section}
 </body>
 </html>
 """
@@ -105,6 +134,10 @@ def _matches(memory, query):
         str(memory.get(k, ""))
         for k in ("name", "reason", "saved_at", "step")
     ).lower()
+    # Also include animal species names in search.
+    animals = memory.get("animals", {})
+    if animals:
+        text += " " + " ".join(animals.get("populations", {}).keys()).lower()
     return q in text
 
 
@@ -115,7 +148,7 @@ def render_index(memories, query=None):
         rows = "\n".join(
             f"<li class='reason-{m.get('reason', 'memory')}'><a href=\"/archive/{m['name']}\">{m['name']}</a> "
             f"<span class='meta'>— step {m.get('step', '?')}, {m.get('reason', '')}, "
-            f"{m.get('plants', 0)} plants, {m.get('saved_at', '')}</span></li>"
+            f"{m.get('plants', 0)} plants{animal_summary(m)}, {m.get('saved_at', '')}</span></li>"
             for m in reversed(matched)
         )
         list_html = f"<ul class='memories'>\n{rows}\n</ul>"
