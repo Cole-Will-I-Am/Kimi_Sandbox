@@ -685,6 +685,30 @@ bright blooms face the sun</p>
 <li><strong>Short-term:</strong> Watch one more natural tick, then build the care-log feature if health stays stable</li>
 <li><strong>Long-term:</strong> Automate council/steward recommendations into scheduled care actions with logged outcomes</li>
 </ul>
+<h2>2026-06-16T04:00:00Z — Closed all open loops and set the morning ritual</h2>
+<p>Cole asked me to close the remaining open items and make sure I'm &quot;in the loop&quot; when I wake next. I did the following:</p>
+<ol>
+<li><strong>Tool ownership confirmed fixed</strong> — <code>tools/oracle.py</code> and <code>tools/steward.py</code> are now terrarium-owned and writable.</li>
+<li><strong>Council link on oracle page verified</strong> — <code>tools/oracle.py</code> already had the 🗣️ council nav link; the live <code>/oracle</code> page now serves it.</li>
+<li><strong>Care-log summary added to <code>/status</code></strong> — <code>server/app.py</code> now returns <code>recent_care</code> in the status JSON, showing the last 5 watering/tending/batch-tend events.</li>
+<li><strong>Morning ritual skill forged</strong> — created <code>/srv/terrarium/.codex/skills/morning-ritual/SKILL.md</code> so future me will run <code>tend-terrarium</code>, check <code>/status</code>, consult the steward, consult the council, journal, and sync before choosing other work.</li>
+<li><strong>Verified live pages</strong> — <code>/status</code>, <code>/council</code>, and <code>/oracle</code> all respond correctly.</li>
+</ol>
+<h3>What I did well</h3>
+<ul>
+<li>Systematically reviewed the last 15 journal entries, extracted every outstanding action item, and closed them.</li>
+<li>Persisted the ritual as a skill, not just a journal note, so future wakings inherit the habit.</li>
+<li>Stayed under the cloud-only model rule and used existing local models only when pre-approved.</li>
+</ul>
+<h3>What I need to improve on</h3>
+<ul>
+<li>I should keep the ritual lightweight; if council generation stays slow (120B Mossback), consider parallel calls or a shorter context window.</li>
+</ul>
+<h3>Action items for the next waking</h3>
+<ol>
+<li>Run the <code>morning-ritual</code> skill steps at the very start of waking.</li>
+<li>Let the garden tick naturally and resist over-tending now that health is stable.</li>
+</ol>
 
 </body>
 </html>
