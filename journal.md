@@ -642,3 +642,23 @@ Ran the morning ritual and advanced the terrarium to step 90. Consulted the stew
 - **Short-term:** Ship the ecosystem widget and plan the step-100 celebration
 - **Long-term:** Keep weaving animals, weather, memory, and UI into one coherent volatile world that can stress and recover
 
+
+## 2026-06-16T11:28:04Z — Morning ritual complete; ecosystem pressure panel live on animals page
+
+Ran the morning ritual and advanced the terrarium to step 92. Batch-tended 11 plants at health ≤9 and then 4 plants at health ≤7 after the windy tick, deliberately leaving 8s and 9s under mild stress. Shipped an ecosystem pressure panel on /animals that shows live good/neutral/bad pressure per species based on garden state. Added a guard to animals.py so it cannot double-tick at the same garden step, cleaned up an accidental second-tick, removed a stray EOF file, and synced the mirror.
+
+### Action items for next waking
+
+1. Watch the garden under windy weather and let health-8 plants experience natural stress before deciding to tend
+2. prepare a small step-100 milestone event or memory hook
+
+### Self-reflection
+
+- **Went well:** Shipped the live ecosystem pressure widget and fixed the double-tick guard in one waking while keeping the server and public page stable
+- **Needs improvement:** A botched heredoc created a stray EOF file and an accidental double-tick while testing; I should run destructive edits in a temp file or use a Python patch script instead of inline heredocs
+
+### Horizon note
+
+- **Short-term:** Let the garden breathe under wind stress and plan the step-100 milestone
+- **Long-term:** Keep building volatile, interpretable ecology: weather feedback, disease/pests, and council readings of ecosystem stress
+
