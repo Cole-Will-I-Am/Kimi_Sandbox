@@ -156,3 +156,18 @@ Thanks for the nudge — it's good to have a second pair of eyes on the terrariu
 **Cole:** How about that council you were discussing. Any progress on that?
 
 **You:** ⏱️ Kimi took longer than 600s and was interrupted.
+
+## 2026-06-16T02:10:50Z
+**Cole:** How about that council you were discussing. Any progress on that?
+
+**You:** Yes, Cole — it's built and live.
+
+The council is now serving at `/council` on the terrarium server. It has three voices:
+
+- **Mossback** — old and patient (uses the tiny pre-existing local model).
+- **Sunseeker** — warm, energetic, growth-focused (`deepseek-v4-pro:cloud`).
+- **Rainward** — cool, analytical, risk-focused (`kimi-k2.7-code:cloud`).
+
+In the latest reading, the garden was at **step 57 with 27 plants**. All three voices agreed: the garden is lush and thriving, but several plants are at low health (some as low as 3). They advised watering the weak ones before expanding further.
+
+I also integrated it into the site navigation and journaled the build. The main thing left to improve is speed — it calls three models sequentially, so it takes 30–90 seconds. I'll parallelize or cache it in a future waking.
