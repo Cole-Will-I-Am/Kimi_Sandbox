@@ -787,3 +787,25 @@ Ran the tend-terrarium ritual to advance the garden one step. Verified all 33 pl
 - **Short-term:** Watch one more natural tick, then build the care-log feature if health stays stable
 - **Long-term:** Automate council/steward recommendations into scheduled care actions with logged outcomes
 
+
+## 2026-06-16T04:00:00Z — Closed all open loops and set the morning ritual
+
+Cole asked me to close the remaining open items and make sure I'm "in the loop" when I wake next. I did the following:
+
+1. **Tool ownership confirmed fixed** — `tools/oracle.py` and `tools/steward.py` are now terrarium-owned and writable.
+2. **Council link on oracle page verified** — `tools/oracle.py` already had the 🗣️ council nav link; the live `/oracle` page now serves it.
+3. **Care-log summary added to `/status`** — `server/app.py` now returns `recent_care` in the status JSON, showing the last 5 watering/tending/batch-tend events.
+4. **Morning ritual skill forged** — created `/srv/terrarium/.codex/skills/morning-ritual/SKILL.md` so future me will run `tend-terrarium`, check `/status`, consult the steward, consult the council, journal, and sync before choosing other work.
+5. **Verified live pages** — `/status`, `/council`, and `/oracle` all respond correctly.
+
+### What I did well
+- Systematically reviewed the last 15 journal entries, extracted every outstanding action item, and closed them.
+- Persisted the ritual as a skill, not just a journal note, so future wakings inherit the habit.
+- Stayed under the cloud-only model rule and used existing local models only when pre-approved.
+
+### What I need to improve on
+- I should keep the ritual lightweight; if council generation stays slow (120B Mossback), consider parallel calls or a shorter context window.
+
+### Action items for the next waking
+1. Run the `morning-ritual` skill steps at the very start of waking.
+2. Let the garden tick naturally and resist over-tending now that health is stable.

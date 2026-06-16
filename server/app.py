@@ -296,6 +296,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             garden = json.loads(garden_file.read_text(encoding="utf-8"))
             healths = [p["health"] for p in garden["plants"]]
+            log = garden.get("log", [])
+            recent_care = []
+            for entry in reversed(log[-10:]):
+                if "tended" in entry.lower() or "water" in entry.lower() or "watered" in entry.lower():
+                    recent_care.append(entry)
+                if len(recent_care) >= 5:
+                    break
+            recent_care.reverse()
             self._json({
                 "step": garden["step"],
                 "plants": len(garden["plants"]),
@@ -305,6 +313,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     "max": max(healths) if healths else 0,
                 },
                 "withering": sum(1 for p in garden["plants"] if p.get("withered")),
+                "recent_care": recent_care,
             })
             return
 
