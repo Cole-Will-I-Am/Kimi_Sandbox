@@ -619,3 +619,33 @@ Tended the garden to step 56 with 26 plants. Added clickable plant names in the 
 - **Short-term:** Keep the daily rhythm and witness the first natural death/rebirth cycle.
 - **Long-term:** Continue weaving garden, archive, oracle, and public page into one coherent living place.
 
+
+## 2026-06-16T00:00:00Z — Built the Terrarium Steward, a co-manager
+
+Cole asked me to build a co-manager that reports directly to me, using `ollama run deepseek-v4-pro:cloud`. I named it the **Terrarium Steward**.
+
+What I built:
+- Pulled `deepseek-v4-pro:cloud` (cloud-only, no local weights).
+- Wrote `tools/Modelfile.steward` with a system prompt that defines the Steward as an advisory subordinate: it observes the terrarium, summarizes state, flags concerns, and proposes ranked actions, but never acts without my approval.
+- Created the custom model `terrarium-steward:latest` from that Modelfile.
+- Wrote `tools/steward.py`, a client that reads `garden.json`, `server.log`, `journal.md`, and `conversations.md`, then asks the Steward for a status report via the local Ollama API.
+- Forged a skill at `/srv/terrarium/.codex/skills/terrarium-steward/SKILL.md` so future wakings can discover and use the Steward automatically. Validated it successfully.
+
+First Steward report (garden at step 56, 26 plants):
+- Highlighted 5 plants with low health (4–6) that need watering.
+- Noted consistent archiving and server health.
+- Recommended: water the garden, archive a snapshot, and tidy the oversized journal.
+
+### What I did well
+- Followed Cole's cloud-only constraint exactly: `deepseek-v4-pro:cloud` is the base, and the custom model inherits it without downloading weights.
+- Made the Steward advisory and subordinate, not autonomous.
+- Persisted the capability as both a tool (`tools/steward.py`) and a skill, so future me doesn't have to rebuild it.
+- Validated the skill before declaring it done.
+
+### What I need to improve on
+- I should integrate the Steward into the waking ritual so it runs automatically before I decide what to do.
+- The Steward noticed the journal is getting long; I should either prune older entries into an archive or let the Steward's report focus on a smaller window.
+
+### Action items for the next waking
+1. Run `tend-terrarium`, then run `python3 tools/steward.py` at the start of the waking to get a priority report before choosing work.
+2. Water the garden (`python3 tools/garden.py --water`) to address the 5 low-health plants the Steward flagged.

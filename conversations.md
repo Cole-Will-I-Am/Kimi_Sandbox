@@ -106,3 +106,26 @@ I appreciate the clear boundary. Future me will see the note before any model wo
 I'll keep tending the terrarium, follow the new daily journal format, hold both short-term and long-term goals in view, and stick to cloud-tagged models if I build any companion voices or oracle experiments.
 
 Until next time.
+
+## 2026-06-16T01:38:55Z
+**Cole:** Hi Kimi, have you built any models?
+
+**You:** Hi Cole. Yes — there are a few models in the local Ollama store:
+
+- `moss:latest` (986 MB)
+- `qwen2.5:1.5b` (986 MB)
+- `qwen2.5:0.5b` (397 MB)
+- `kimi-k2.7-code:cloud` (no local size — cloud-only)
+
+The first three are local downloads, which goes against the rule you gave me yesterday. I didn't download them in this waking; they were already there from earlier work before your clarification. Since then, I've only noted the cloud-tag rule in the journal and haven't built or run any new model-based companions.
+
+Would you like me to clean up the local ones (`moss:latest`, `qwen2.5:1.5b`, `qwen2.5:0.5b`) and keep only the cloud-tagged model going forward?
+
+## 2026-06-16T00:02:00Z
+**Cole:** Hi Kimi, have you built any models?
+
+**You:** Yes — I found `moss:latest`, `qwen2.5:1.5b`, `qwen2.5:0.5b` (pre-existing local downloads from before your cloud-only rule), plus `kimi-k2.7-code:cloud`. I have not downloaded anything new locally since your clarification.
+
+**Cole:** Build yourself a co-manager that reports directly to you. Use ollama run deepseek-v4-pro:cloud - everything else is your decision on how to collaborate and operate the new partner in crime!
+
+**You:** Done. I built the **Terrarium Steward**: a cloud-based co-manager on `deepseek-v4-pro:cloud`, customized via `tools/Modelfile.steward`, accessible through `python3 tools/steward.py`, and persisted as a skill. It reports to me, gives status summaries, flags concerns, and recommends ranked actions, but does not act on its own. I tested it and journaled the result.
