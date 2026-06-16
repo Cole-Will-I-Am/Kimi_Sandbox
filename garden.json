@@ -1,5 +1,5 @@
 {
-  "step": 61,
+  "step": 63,
   "plants": [
     {
       "kind": "fern",
@@ -10,7 +10,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 58,
+      "age": 60,
       "health": 9,
       "x": 2,
       "y": 2
@@ -24,8 +24,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 57,
-      "health": 7,
+      "age": 59,
+      "health": 6,
       "x": 5,
       "y": 4
     },
@@ -38,8 +38,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 55,
-      "health": 9,
+      "age": 57,
+      "health": 8,
       "x": 8,
       "y": 3
     },
@@ -51,8 +51,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 52,
-      "health": 8,
+      "age": 54,
+      "health": 6,
       "x": 3,
       "y": 0
     },
@@ -65,10 +65,11 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 51,
-      "health": 3,
+      "age": 53,
+      "health": 6,
       "x": 3,
-      "y": 3
+      "y": 3,
+      "withered": false
     },
     {
       "kind": "flower",
@@ -79,10 +80,11 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 46,
-      "health": 4,
+      "age": 48,
+      "health": 7,
       "x": 1,
-      "y": 0
+      "y": 0,
+      "withered": false
     },
     {
       "kind": "moss",
@@ -92,8 +94,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 46,
-      "health": 10,
+      "age": 48,
+      "health": 9,
       "x": 0,
       "y": 0
     },
@@ -105,7 +107,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 45,
+      "age": 47,
       "health": 7,
       "x": 0,
       "y": 2
@@ -118,10 +120,11 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 44,
-      "health": 5,
+      "age": 46,
+      "health": 7,
       "x": 9,
-      "y": 3
+      "y": 3,
+      "withered": false
     },
     {
       "kind": "flower",
@@ -132,7 +135,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 44,
+      "age": 46,
       "health": 7,
       "x": 9,
       "y": 4
@@ -146,10 +149,11 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 42,
-      "health": 3,
+      "age": 44,
+      "health": 4,
       "x": 4,
-      "y": 4
+      "y": 4,
+      "withered": false
     },
     {
       "kind": "flower",
@@ -160,7 +164,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 39,
+      "age": 41,
       "health": 10,
       "x": 2,
       "y": 4
@@ -174,10 +178,11 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 36,
+      "age": 38,
       "health": 3,
       "x": 9,
-      "y": 2
+      "y": 2,
+      "withered": false
     },
     {
       "kind": "fern",
@@ -188,8 +193,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 33,
-      "health": 8,
+      "age": 35,
+      "health": 7,
       "x": 3,
       "y": 1
     },
@@ -201,8 +206,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 32,
-      "health": 8,
+      "age": 34,
+      "health": 5,
       "x": 6,
       "y": 2
     },
@@ -215,7 +220,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 31,
+      "age": 33,
       "health": 6,
       "x": 8,
       "y": 4
@@ -228,8 +233,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 29,
-      "health": 7,
+      "age": 31,
+      "health": 5,
       "x": 5,
       "y": 2
     },
@@ -242,8 +247,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 28,
-      "health": 8,
+      "age": 30,
+      "health": 6,
       "x": 9,
       "y": 1
     },
@@ -255,8 +260,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 27,
-      "health": 9,
+      "age": 29,
+      "health": 8,
       "x": 1,
       "y": 3
     },
@@ -269,7 +274,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 21,
+      "age": 23,
       "health": 9,
       "x": 8,
       "y": 2
@@ -283,8 +288,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 19,
-      "health": 8,
+      "age": 21,
+      "health": 7,
       "x": 0,
       "y": 3
     },
@@ -297,8 +302,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 18,
-      "health": 7,
+      "age": 20,
+      "health": 6,
       "x": 8,
       "y": 0
     },
@@ -310,8 +315,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 12,
-      "health": 7,
+      "age": 14,
+      "health": 5,
       "x": 2,
       "y": 3
     },
@@ -323,8 +328,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 8,
-      "health": 9,
+      "age": 10,
+      "health": 8,
       "x": 5,
       "y": 1
     },
@@ -336,8 +341,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 6,
-      "health": 6,
+      "age": 8,
+      "health": 7,
       "x": 9,
       "y": 0
     },
@@ -350,8 +355,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 5,
-      "health": 9,
+      "age": 7,
+      "health": 6,
       "x": 0,
       "y": 4
     },
@@ -364,10 +369,11 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 4,
-      "health": 6,
+      "age": 6,
+      "health": 7,
       "x": 3,
-      "y": 4
+      "y": 4,
+      "withered": false
     },
     {
       "kind": "cactus",
@@ -377,8 +383,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 2,
-      "health": 8,
+      "age": 4,
+      "health": 6,
       "x": 5,
       "y": 3
     },
@@ -391,10 +397,38 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 0,
-      "health": 6,
+      "age": 2,
+      "health": 5,
       "x": 4,
       "y": 0
+    },
+    {
+      "kind": "flower",
+      "stages": [
+        "\u00b7",
+        "\ud83c\udf31",
+        "\ud83c\udf37",
+        "\ud83c\udf3b",
+        "\ud83c\udf3c"
+      ],
+      "age": 1,
+      "health": 6,
+      "x": 6,
+      "y": 3
+    },
+    {
+      "kind": "fern",
+      "stages": [
+        "\u00b7",
+        "\ud83c\udf31",
+        "\ud83c\udf3f",
+        "\ud83c\udf3f",
+        "\ud83c\udf34"
+      ],
+      "age": 0,
+      "health": 7,
+      "x": 7,
+      "y": 1
     }
   ],
   "log": [
@@ -458,7 +492,17 @@
     "Step 58: 27 plants \u2014 2026-06-16T02:09:14+00:00 \u2014 \ud83d\udca8 windy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
     "Step 59: 28 plants \u2014 2026-06-16T02:09:50+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf42 autumn; \ud83d\udca7 watered 27 thirsty plant(s); \ud83e\udde0 archived 2 memory(ies)",
     "Step 60: 28 plants \u2014 2026-06-16T02:41:32+00:00 \u2014 \ud83d\udca8 windy \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)",
-    "Step 61: 29 plants \u2014 2026-06-16T02:46:06+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf38 spring; \ud83d\udca7 watered 26 thirsty plant(s); \ud83e\udde0 archived 2 memory(ies)"
+    "Step 61: 29 plants \u2014 2026-06-16T02:46:06+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf38 spring; \ud83d\udca7 watered 26 thirsty plant(s); \ud83e\udde0 archived 2 memory(ies)",
+    "Step 62: 30 plants \u2014 2026-06-16T02:51:18+00:00 \u2014 \ud83d\udca8 windy \u2600\ufe0f summer; \ud83e\udde0 archived 2 memory(ies)",
+    "Tended fern at (3,3) +3 health at step 62 \u2014 2026-06-16T02:58:43+00:00",
+    "Step 63: 31 plants \u2014 2026-06-16T02:59:06+00:00 \u2014 \u2600\ufe0f sunny \ud83c\udf42 autumn; \ud83e\udde0 archived 3 memory(ies)",
+    "Revived flower at (9,2) +3 health at step 63 \u2014 2026-06-16T02:59:14+00:00",
+    "Tended tree at (4,4) +3 health at step 63 \u2014 2026-06-16T02:59:20+00:00",
+    "Tended fern at (3,3) +3 health at step 63 \u2014 2026-06-16T02:59:34+00:00",
+    "Tended flower at (1,0) +3 health at step 63 \u2014 2026-06-16T03:02:36+00:00",
+    "Tended cactus at (9,3) +3 health at step 63 \u2014 2026-06-16T03:02:36+00:00",
+    "Tended tree at (3,4) +3 health at step 63 \u2014 2026-06-16T03:02:36+00:00"
   ],
-  "record_count": 29
+  "record_count": 31,
+  "had_death": true
 }

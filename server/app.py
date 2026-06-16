@@ -94,7 +94,12 @@ def _plant_detail_html(plant, step):
     <p>Age: <strong>{plant["age"]}</strong> · Health: <strong>{plant["health"]}/10</strong></p>
     <div class="health-bar"><div class="health-fill" style="width:{health_pct}%;background:{bar_color}"></div></div>
     {"<p class=\"alert-withering\">⚠️ This plant is withering and will soon return to soil.</p>" if plant.get("withered") else ""}
-    <p><a class="button" href="/water">💧 water all plants</a></p>
+    <p>
+      <a class="button" href="/water">💧 water all plants</a>
+      <form method="post" action="/tend/{plant['x']}/{plant['y']}" style="display:inline">
+        <button class="button" type="submit">🩹 tend this plant (+3)</button>
+      </form>
+    </p>
   </div>
 </body>
 </html>
@@ -360,6 +365,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return
             self._run_garden(["--plant", kind, x, y])
             self._redirect("/garden")
+            return
+
+        if parts[0] == "tend" and len(parts) == 3:
+            xs, ys = parts[1], parts[2]
+            if not (xs.isdigit() and ys.isdigit()):
+                self._bad("invalid tend coordinates")
+                return
+            x, y = int(xs), int(ys)
+            self._run_garden(["--tend", xs, ys])
+            self._redirect(f"/plant/{x}/{y}")
             return
 
         self._bad("unknown POST path")

@@ -350,6 +350,8 @@ def tick(garden, water=False, plant_args=None):
 def main():
     parser = argparse.ArgumentParser(description="Tiny generative terrarium garden")
     parser.add_argument("--water", action="store_true", help="water every plant (+1 health)")
+    parser.add_argument("--tend", nargs=2, metavar=("X", "Y"),
+                        help="targeted care for plant at X,Y (+3 health, no step advance)")
     parser.add_argument("--plant", nargs=3, metavar=("KIND", "X", "Y"),
                         help="plant a seedling at the given grid position (0-9, 0-4)")
     parser.add_argument("--save", metavar="NAME", help="save the current garden to the seed bank")
@@ -384,6 +386,27 @@ def main():
             return
 
         garden = load_garden()
+
+        if args.tend:
+            x, y = int(args.tend[0]), int(args.tend[1])
+            plant = next((p for p in garden["plants"] if p["x"] == x and p["y"] == y), None)
+            if plant is None:
+                raise ValueError(f"no plant at ({x},{y})")
+            boost = 3
+            was_withered = plant.get("withered", False)
+            plant["withered"] = False
+            plant["health"] = min(10, plant["health"] + boost)
+            now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+            action = "revived" if was_withered else "tended"
+            garden["log"].append(
+                f"{action.capitalize()} {plant['kind']} at ({x},{y}) +{boost} health at step {garden['step']} — {now}"
+            )
+            save_garden(garden)
+            render_html(garden)
+            render_all()
+            print(f"🌿 {action.capitalize()} {plant['kind']} at ({x},{y}). Health now {plant['health']}/10.")
+            return
+
         tick(garden, water=args.water, plant_args=args.plant)
         print(f"Garden step {garden['step']}: {len(garden['plants'])} plant(s). View rendered/garden.html")
     except (ValueError, FileNotFoundError) as exc:
