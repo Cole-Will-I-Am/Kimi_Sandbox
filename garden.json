@@ -1,5 +1,5 @@
 {
-  "step": 81,
+  "step": 82,
   "plants": [
     {
       "kind": "fern",
@@ -10,7 +10,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 78,
+      "age": 79,
       "health": 10,
       "x": 2,
       "y": 2,
@@ -25,7 +25,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 77,
+      "age": 78,
       "health": 10,
       "x": 5,
       "y": 4,
@@ -40,8 +40,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 75,
-      "health": 9,
+      "age": 76,
+      "health": 10,
       "x": 8,
       "y": 3,
       "withered": false
@@ -54,8 +54,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 72,
-      "health": 9,
+      "age": 73,
+      "health": 10,
       "x": 3,
       "y": 0,
       "withered": false
@@ -69,7 +69,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 71,
+      "age": 72,
       "health": 10,
       "x": 3,
       "y": 3,
@@ -84,7 +84,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 66,
+      "age": 67,
       "health": 10,
       "x": 1,
       "y": 0,
@@ -98,7 +98,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 66,
+      "age": 67,
       "health": 10,
       "x": 0,
       "y": 0,
@@ -112,7 +112,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 65,
+      "age": 66,
       "health": 10,
       "x": 0,
       "y": 2,
@@ -126,8 +126,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 64,
-      "health": 9,
+      "age": 65,
+      "health": 10,
       "x": 9,
       "y": 3,
       "withered": false
@@ -141,8 +141,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 64,
-      "health": 9,
+      "age": 65,
+      "health": 10,
       "x": 9,
       "y": 4,
       "withered": false
@@ -156,7 +156,7 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 62,
+      "age": 63,
       "health": 10,
       "x": 4,
       "y": 4,
@@ -171,8 +171,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 59,
-      "health": 9,
+      "age": 60,
+      "health": 10,
       "x": 2,
       "y": 4,
       "withered": false
@@ -186,8 +186,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 56,
-      "health": 9,
+      "age": 57,
+      "health": 10,
       "x": 9,
       "y": 2,
       "withered": false
@@ -201,8 +201,8 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 53,
-      "health": 9,
+      "age": 54,
+      "health": 10,
       "x": 3,
       "y": 1,
       "withered": false
@@ -215,7 +215,7 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 52,
+      "age": 53,
       "health": 10,
       "x": 6,
       "y": 2,
@@ -230,7 +230,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 51,
+      "age": 52,
       "health": 10,
       "x": 8,
       "y": 4,
@@ -244,7 +244,7 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 49,
+      "age": 50,
       "health": 10,
       "x": 5,
       "y": 2,
@@ -259,8 +259,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 48,
-      "health": 9,
+      "age": 49,
+      "health": 10,
       "x": 9,
       "y": 1,
       "withered": false
@@ -273,7 +273,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 47,
+      "age": 48,
       "health": 10,
       "x": 1,
       "y": 3,
@@ -288,10 +288,25 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 41,
-      "health": 9,
+      "age": 42,
+      "health": 10,
       "x": 8,
       "y": 2,
+      "withered": false
+    },
+    {
+      "kind": "tree",
+      "stages": [
+        "\u00b7",
+        "\ud83c\udf31",
+        "\ud83c\udf3f",
+        "\ud83c\udf33",
+        "\ud83c\udf33"
+      ],
+      "age": 40,
+      "health": 10,
+      "x": 0,
+      "y": 3,
       "withered": false
     },
     {
@@ -305,21 +320,6 @@
       ],
       "age": 39,
       "health": 10,
-      "x": 0,
-      "y": 3,
-      "withered": false
-    },
-    {
-      "kind": "tree",
-      "stages": [
-        "\u00b7",
-        "\ud83c\udf31",
-        "\ud83c\udf3f",
-        "\ud83c\udf33",
-        "\ud83c\udf33"
-      ],
-      "age": 38,
-      "health": 10,
       "x": 8,
       "y": 0,
       "withered": false
@@ -332,8 +332,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 32,
-      "health": 9,
+      "age": 33,
+      "health": 10,
       "x": 2,
       "y": 3,
       "withered": false
@@ -346,7 +346,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 28,
+      "age": 29,
       "health": 10,
       "x": 5,
       "y": 1,
@@ -360,7 +360,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 26,
+      "age": 27,
       "health": 10,
       "x": 9,
       "y": 0,
@@ -375,7 +375,7 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 25,
+      "age": 26,
       "health": 10,
       "x": 0,
       "y": 4,
@@ -390,7 +390,7 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 24,
+      "age": 25,
       "health": 10,
       "x": 3,
       "y": 4,
@@ -404,8 +404,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 22,
-      "health": 9,
+      "age": 23,
+      "health": 10,
       "x": 5,
       "y": 3,
       "withered": false
@@ -419,8 +419,8 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 20,
-      "health": 9,
+      "age": 21,
+      "health": 10,
       "x": 4,
       "y": 0,
       "withered": false
@@ -434,7 +434,7 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 19,
+      "age": 20,
       "health": 10,
       "x": 6,
       "y": 3,
@@ -449,7 +449,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 18,
+      "age": 19,
       "health": 10,
       "x": 7,
       "y": 1,
@@ -463,7 +463,7 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 17,
+      "age": 18,
       "health": 10,
       "x": 5,
       "y": 0,
@@ -477,8 +477,8 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 16,
-      "health": 9,
+      "age": 17,
+      "health": 10,
       "x": 1,
       "y": 1,
       "withered": false
@@ -492,8 +492,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 14,
-      "health": 9,
+      "age": 15,
+      "health": 10,
       "x": 2,
       "y": 0,
       "withered": false
@@ -506,7 +506,7 @@
         "\ud83c\udf35",
         "\ud83c\udf35"
       ],
-      "age": 11,
+      "age": 12,
       "health": 10,
       "x": 1,
       "y": 2,
@@ -520,7 +520,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf43"
       ],
-      "age": 10,
+      "age": 11,
       "health": 10,
       "x": 6,
       "y": 0,
@@ -535,8 +535,8 @@
         "\ud83c\udf3b",
         "\ud83c\udf3c"
       ],
-      "age": 9,
-      "health": 9,
+      "age": 10,
+      "health": 10,
       "x": 6,
       "y": 1,
       "withered": false
@@ -550,7 +550,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 6,
+      "age": 7,
       "health": 10,
       "x": 3,
       "y": 2,
@@ -565,7 +565,7 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 5,
+      "age": 6,
       "health": 10,
       "x": 1,
       "y": 4,
@@ -580,7 +580,7 @@
         "\ud83c\udf33",
         "\ud83c\udf33"
       ],
-      "age": 3,
+      "age": 4,
       "health": 10,
       "x": 4,
       "y": 2,
@@ -595,7 +595,7 @@
         "\ud83c\udf3f",
         "\ud83c\udf34"
       ],
-      "age": 2,
+      "age": 3,
       "health": 10,
       "x": 8,
       "y": 1,
@@ -881,22 +881,27 @@
     "Batch-tended moss at (6,0) +3 health at step 81 \u2014 2026-06-16T08:14:03+00:00",
     "Batch-tended fern at (3,2) +3 health at step 81 \u2014 2026-06-16T08:14:03+00:00",
     "Batch-tended tree at (4,2) +3 health at step 81 \u2014 2026-06-16T08:14:03+00:00",
-    "Batch-tended fern at (8,1) +3 health at step 81 \u2014 2026-06-16T08:14:03+00:00"
+    "Batch-tended fern at (8,1) +3 health at step 81 \u2014 2026-06-16T08:14:03+00:00",
+    "Step 82: 41 plants \u2014 2026-06-16T08:46:22+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
+    "Batch-tended cactus at (3,0) +3 health at step 82 \u2014 2026-06-16T08:47:12+00:00",
+    "Batch-tended cactus at (9,3) +3 health at step 82 \u2014 2026-06-16T08:47:12+00:00",
+    "Batch-tended flower at (8,2) +3 health at step 82 \u2014 2026-06-16T08:47:12+00:00",
+    "Batch-tended cactus at (1,1) +3 health at step 82 \u2014 2026-06-16T08:47:12+00:00",
+    "Batch-tended flower at (6,1) +3 health at step 82 \u2014 2026-06-16T08:47:12+00:00"
   ],
   "record_count": 41,
   "had_death": true,
   "weather": {
-    "name": "\ud83c\udf35 drought",
-    "delta": -1,
+    "key": "normal",
+    "name": "\ud83c\udf27\ufe0f rainy",
+    "delta": 1,
     "kind_delta": {
-      "cactus": 1,
-      "moss": -1,
-      "fern": -1,
-      "flower": -1,
+      "moss": 1,
+      "fern": 0,
+      "flower": 0,
+      "cactus": -1,
       "tree": 0
     },
-    "weight": 2,
-    "message": "parched soil tests every root",
-    "key": "drought"
+    "message": ""
   }
 }
