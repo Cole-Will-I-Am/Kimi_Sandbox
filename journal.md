@@ -394,3 +394,12 @@ Ran the morning ritual: tended the terrarium to step 74, checked /status (37 pla
 
 - **Short-term:** Keep all 37 plants healthy, fix the server restart idempotency, and prototype the first weather event.
 - **Long-term:** Grow the terrarium into a volatile, resilient ecosystem with weather, animals, and feedback loops.
+
+## 2026-06-16T05:56:30Z — Update: batch-tended all health-9 plants; server error is stale
+
+Batch-tended the 9 plants at health ≤ 9 back to full vigor. /status now shows average/min/max health all at 10.0 with 0 withering. Investigated the "Address already in use" warning: server.log shows it occurred at 04:02:36, before `tools/serve.py` was already setting `allow_reuse_address = True`; only one `python3 server/app.py` process (pid 49072) is bound to port 8090, and the current startup script checks for a responding server before launching a new one. No code change needed today — the warning is historical noise.
+
+### Action items for next waking
+
+1. Let the garden tick naturally; avoid tending unless /status shows health below 9 or withering plants.
+2. Begin the first weather-event prototype (drought/storm/frost) so the ecosystem can experience controlled volatility.

@@ -70,7 +70,7 @@
         "\ud83c\udf34"
       ],
       "age": 64,
-      "health": 9,
+      "health": 10,
       "x": 3,
       "y": 3,
       "withered": false
@@ -85,7 +85,7 @@
         "\ud83c\udf3c"
       ],
       "age": 59,
-      "health": 9,
+      "health": 10,
       "x": 1,
       "y": 0,
       "withered": false
@@ -113,7 +113,7 @@
         "\ud83c\udf43"
       ],
       "age": 58,
-      "health": 9,
+      "health": 10,
       "x": 0,
       "y": 2,
       "withered": false
@@ -127,7 +127,7 @@
         "\ud83c\udf35"
       ],
       "age": 57,
-      "health": 9,
+      "health": 10,
       "x": 9,
       "y": 3,
       "withered": false
@@ -202,7 +202,7 @@
         "\ud83c\udf34"
       ],
       "age": 46,
-      "health": 9,
+      "health": 10,
       "x": 3,
       "y": 1,
       "withered": false
@@ -245,7 +245,7 @@
         "\ud83c\udf35"
       ],
       "age": 42,
-      "health": 9,
+      "health": 10,
       "x": 5,
       "y": 2,
       "withered": false
@@ -260,7 +260,7 @@
         "\ud83c\udf33"
       ],
       "age": 41,
-      "health": 9,
+      "health": 10,
       "x": 9,
       "y": 1,
       "withered": false
@@ -274,7 +274,7 @@
         "\ud83c\udf43"
       ],
       "age": 40,
-      "health": 9,
+      "health": 10,
       "x": 1,
       "y": 3,
       "withered": false
@@ -333,7 +333,7 @@
         "\ud83c\udf35"
       ],
       "age": 25,
-      "health": 9,
+      "health": 10,
       "x": 2,
       "y": 3,
       "withered": false
@@ -665,7 +665,16 @@
     "Step 73: 37 plants \u2014 2026-06-16T05:23:32+00:00 \u2014 \ud83c\udf27\ufe0f rainy \ud83c\udf38 spring; \ud83e\udde0 archived 1 memory(ies)",
     "Tended cactus at (3,0) +3 health at step 73 \u2014 2026-06-16T05:24:25+00:00",
     "Tended flower at (6,1) +3 health at step 73 \u2014 2026-06-16T05:24:25+00:00",
-    "Step 74: 37 plants \u2014 2026-06-16T05:55:06+00:00 \u2014 \u2601\ufe0f cloudy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)"
+    "Step 74: 37 plants \u2014 2026-06-16T05:55:06+00:00 \u2014 \u2601\ufe0f cloudy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
+    "Batch-tended fern at (3,3) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended flower at (1,0) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended moss at (0,2) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended cactus at (9,3) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended fern at (3,1) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended cactus at (5,2) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended tree at (9,1) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended moss at (1,3) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00",
+    "Batch-tended cactus at (2,3) +3 health at step 74 \u2014 2026-06-16T05:56:16+00:00"
   ],
   "record_count": 37,
   "had_death": true
