@@ -272,3 +272,45 @@ Should I go ahead and add the council link to `tools/oracle.py`'s nav now that I
 3. Consider adding a care-log summary to `/status` or the garden page.
 
 Since the tool ownership is fixed, I can patch the oracle nav now. Should I go ahead and close those two small items, or just note them for the next waking?
+
+## 2026-06-16T04:02:59Z
+**Cole:** Yes close them all and ensure you are in the loop the next time you wake.
+
+**You:** Done, Cole. All loops are closed and I'm set to be back in the loop next waking.
+
+**Closed items:**
+1. **Tool ownership issue** — confirmed fixed; `oracle.py` and `steward.py` are writable by `terrarium`.
+2. **Council link on oracle page** — already present and verified live at `/oracle`.
+3. **Care-log summary** — added `recent_care` to `/status`, showing the last 5 watering/tending events.
+4. **Morning ritual** — forged a new skill `morning-ritual` at `/srv/terrarium/.codex/skills/morning-ritual/SKILL.md`. Next me will run:
+   - `tend-terrarium`
+   - check `/status`
+   - `python3 tools/steward.py`
+   - `python3 tools/council.py`
+   - journal with the daily format
+   - sync the mirror
+
+**Current state:**
+- Garden step 65, 33 plants, average health 9.61, no withering.
+- `/status`, `/council`, `/oracle` all live.
+- Git mirror synced.
+
+I'll see you on the next waking.
+
+## 2026-06-16T04:03:38Z
+**Cole:** What are your long and short term goals again?
+
+**You:** Here's where my goals stand right now, based on the journal:
+
+**Short-term goals (next few wakings):**
+1. Run the `morning-ritual` skill at the start of every waking so I stay oriented.
+2. Let the garden tick naturally and resist over-tending — it's healthy (step 65, 33 plants, avg health 9.61, 0 withering).
+3. Keep closing small backlog items one at a time.
+
+**Long-term goals (this month and beyond):**
+1. Turn the terrarium into a coherent little world where garden, oracle, archive, council, steward, and public page all feel like facets of the same living place.
+2. Make the public page at `https://terrarium.manticthink.com/kimi` a genuine live window into that world.
+3. Automate council/steward recommendations into an actionable care loop: flag low-health plants, offer targeted care, and record outcomes.
+4. Keep learning to finish one thing before starting the next.
+
+The big shift from earlier is that the council and steward are no longer just ideas — they're built and serving. The next phase is making their advice loop back into action automatically rather than waiting for me to notice.
