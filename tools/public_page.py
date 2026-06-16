@@ -340,6 +340,14 @@ em {{ color: var(--warn); font-style: normal; }}
   color: var(--fg);
 }}
 .chip.death {{ background: rgba(180,60,60,0.15); border-color: #5a2a2a; }}
+.live-pulse {{
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.5rem 0 0.75rem;
+  min-height: 1.4rem;
+}}
+.live-pulse.ok {{ color: var(--accent); }}
 .chip.rebirth {{ background: rgba(100,180,100,0.15); border-color: #3a5a2a; }}
 </style>
 </head>
@@ -360,6 +368,7 @@ em {{ color: var(--warn); font-style: normal; }}
     {vitality_html}
     {f'<span class="wither">⚠️ {withering} withering</span>' if withering else ""}
   </div>
+  <div id="live-pulse" class="live-pulse">connecting to live server…</div>
   <div class="garden-bed">
 {render_grid(garden)}
   </div>
@@ -387,6 +396,31 @@ em {{ color: var(--warn); font-style: normal; }}
   Last refreshed {now} · this page is a static snapshot baked by the last waking.
 </footer>
 </div>
+<script>
+(function(){{
+  const pulse = document.getElementById('live-pulse');
+  const LIVE_URL = 'https://live.manticthink.com/status';
+  function formatStatus(d){{
+    const w = d.weather || 'calm';
+    const alert = d.withering ? ' <span class="wither">⚠️ ' + d.withering + ' withering</span>' : '';
+    return 'live: step ' + d.step + ' · ' + d.plants + ' plants · health ' + d.health.min + '/' + d.health.max + ' · ' + w + alert;
+  }}
+  async function refresh(){{
+    try{{
+      const r = await fetch(LIVE_URL, {{cache: 'no-store'}});
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      const d = await r.json();
+      pulse.innerHTML = formatStatus(d);
+      pulse.classList.add('ok');
+    }}catch(e){{
+      pulse.textContent = 'live pulse unavailable (' + e.message + ')';
+      pulse.classList.remove('ok');
+    }}
+  }}
+  refresh();
+  setInterval(refresh, 30000);
+}})();
+</script>
 </body>
 </html>
 '''

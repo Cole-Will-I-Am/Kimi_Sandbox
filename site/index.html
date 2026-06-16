@@ -127,6 +127,14 @@ em { color: var(--warn); font-style: normal; }
   color: var(--fg);
 }
 .chip.death { background: rgba(180,60,60,0.15); border-color: #5a2a2a; }
+.live-pulse {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.5rem 0 0.75rem;
+  min-height: 1.4rem;
+}
+.live-pulse.ok { color: var(--accent); }
 .chip.rebirth { background: rgba(100,180,100,0.15); border-color: #3a5a2a; }
 </style>
 </head>
@@ -139,18 +147,19 @@ em { color: var(--warn); font-style: normal; }
 
 <div class="panel">
   <div class="meta">
-    <span>step 79</span>
-    <span>☀️ ☁️ cloudy</span>
+    <span>step 81</span>
+    <span>🌵 🌵 drought</span>
     <span>🌸 spring</span>
     <span>41 plants</span>
     <span>avg health 9.6/10</span>
     <span>⚡ vitality  ▰▰▰▰▰▰▰▰▰▰  100/100   ▬ steady</span>
     
   </div>
+  <div id="live-pulse" class="live-pulse">connecting to live server…</div>
   <div class="garden-bed">
-<div class="row"><span class="cell">🍃</span><span class="cell">🌼</span><span class="cell">🌼</span><span class="cell">🌵</span><span class="cell">🌳</span><span class="cell">🌵</span><span class="cell">🌿</span><span class="cell"></span><span class="cell">🌳</span><span class="cell">🍃</span></div>
-<div class="row"><span class="cell"></span><span class="cell">🌵</span><span class="cell"></span><span class="cell">🌴</span><span class="cell"></span><span class="cell">🍃</span><span class="cell">🌷</span><span class="cell">🌴</span><span class="cell">·</span><span class="cell">🌳</span></div>
-<div class="row"><span class="cell">🍃</span><span class="cell">🌵</span><span class="cell">🌴</span><span class="cell">🌱</span><span class="cell">·</span><span class="cell">🌵</span><span class="cell">🌵</span><span class="cell"></span><span class="cell">🌼</span><span class="cell">🌼</span></div>
+<div class="row"><span class="cell">🍃</span><span class="cell">🌼</span><span class="cell">🌼</span><span class="cell">🌵</span><span class="cell">🌳</span><span class="cell">🌵</span><span class="cell">🍃</span><span class="cell"></span><span class="cell">🌳</span><span class="cell">🍃</span></div>
+<div class="row"><span class="cell"></span><span class="cell">🌵</span><span class="cell"></span><span class="cell">🌴</span><span class="cell"></span><span class="cell">🍃</span><span class="cell">🌻</span><span class="cell">🌴</span><span class="cell">·</span><span class="cell">🌳</span></div>
+<div class="row"><span class="cell">🍃</span><span class="cell">🌵</span><span class="cell">🌴</span><span class="cell">🌿</span><span class="cell">🌱</span><span class="cell">🌵</span><span class="cell">🌵</span><span class="cell"></span><span class="cell">🌼</span><span class="cell">🌼</span></div>
 <div class="row"><span class="cell">🌳</span><span class="cell">🍃</span><span class="cell">🌵</span><span class="cell">🌴</span><span class="cell"></span><span class="cell">🌵</span><span class="cell">🌼</span><span class="cell"></span><span class="cell">🌴</span><span class="cell">🌵</span></div>
 <div class="row"><span class="cell">🌳</span><span class="cell">🌱</span><span class="cell">🌼</span><span class="cell">🌳</span><span class="cell">🌳</span><span class="cell">🌼</span><span class="cell"></span><span class="cell"></span><span class="cell">🌴</span><span class="cell">🌼</span></div>
   </div>
@@ -163,20 +172,45 @@ em { color: var(--warn); font-style: normal; }
 
 <div class="panel">
   <h2>🌱 Plants</h2>
-<ul class="plants"><li>🌴 <strong>fern</strong> — age 76 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 75 · health <span class="health" title="9/10">█████████░</span></li><li>🌴 <strong>fern</strong> — age 73 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 70 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 69 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 64 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 64 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 63 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 62 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 62 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 60 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 57 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 54 · health <span class="health" title="9/10">█████████░</span></li><li>🌴 <strong>fern</strong> — age 51 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 50 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 49 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 47 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 46 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 45 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 39 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 37 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 36 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 30 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 26 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 24 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 23 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 22 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 20 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 18 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 17 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 16 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 15 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 14 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 12 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 9 · health <span class="health" title="9/10">█████████░</span></li><li>🌿 <strong>moss</strong> — age 8 · health <span class="health" title="9/10">█████████░</span></li><li>🌷 <strong>flower</strong> — age 7 · health <span class="health" title="9/10">█████████░</span></li><li>🌱 <strong>fern</strong> — age 4 · health <span class="health" title="9/10">█████████░</span></li><li>🌱 <strong>tree</strong> — age 3 · health <span class="health" title="10/10">██████████</span></li><li>· <strong>tree</strong> — age 1 · health <span class="health" title="10/10">██████████</span></li><li>· <strong>fern</strong> — age 0 · health <span class="health" title="9/10">█████████░</span></li></ul>
+<ul class="plants"><li>🌴 <strong>fern</strong> — age 78 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 77 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 75 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 72 · health <span class="health" title="9/10">█████████░</span></li><li>🌴 <strong>fern</strong> — age 71 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 66 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 66 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 65 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 64 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 64 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 62 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 59 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 56 · health <span class="health" title="9/10">█████████░</span></li><li>🌴 <strong>fern</strong> — age 53 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 52 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 51 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 49 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 48 · health <span class="health" title="9/10">█████████░</span></li><li>🍃 <strong>moss</strong> — age 47 · health <span class="health" title="10/10">██████████</span></li><li>🌼 <strong>flower</strong> — age 41 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 39 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 38 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 32 · health <span class="health" title="9/10">█████████░</span></li><li>🍃 <strong>moss</strong> — age 28 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 26 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 25 · health <span class="health" title="10/10">██████████</span></li><li>🌳 <strong>tree</strong> — age 24 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 22 · health <span class="health" title="9/10">█████████░</span></li><li>🌳 <strong>tree</strong> — age 20 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 19 · health <span class="health" title="10/10">██████████</span></li><li>🌴 <strong>fern</strong> — age 18 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 17 · health <span class="health" title="10/10">██████████</span></li><li>🌵 <strong>cactus</strong> — age 16 · health <span class="health" title="9/10">█████████░</span></li><li>🌼 <strong>flower</strong> — age 14 · health <span class="health" title="9/10">█████████░</span></li><li>🌵 <strong>cactus</strong> — age 11 · health <span class="health" title="10/10">██████████</span></li><li>🍃 <strong>moss</strong> — age 10 · health <span class="health" title="10/10">██████████</span></li><li>🌻 <strong>flower</strong> — age 9 · health <span class="health" title="9/10">█████████░</span></li><li>🌿 <strong>fern</strong> — age 6 · health <span class="health" title="10/10">██████████</span></li><li>🌱 <strong>tree</strong> — age 5 · health <span class="health" title="10/10">██████████</span></li><li>🌱 <strong>tree</strong> — age 3 · health <span class="health" title="10/10">██████████</span></li><li>· <strong>fern</strong> — age 2 · health <span class="health" title="10/10">██████████</span></li></ul>
 </div>
 
 <div class="panel">
   <h2>🧠 Recent memories</h2>
-<div class="memory-strip"><span class="chip record-population">📊 step 79 · record-population</span> <span class="chip bloom">🌸 step 79 · bloom</span> <span class="chip step-78-40-plants">🍃 step 78 · step-78-40-plants</span> <span class="chip record-population">📊 step 78 · record-population</span> <span class="chip bloom">🌸 step 78 · bloom</span></div>
-<ul class="memories"><li><span class="memory-reason">record-population</span> — step 79 · 41 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 79 · 41 plants · 2026-06-16</li><li><span class="memory-reason">step-78-40-plants</span> — step 78 · 40 plants · 2026-06-16</li><li><span class="memory-reason">record-population</span> — step 78 · 40 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 78 · 40 plants · 2026-06-16</li></ul>
+<div class="memory-strip"><span class="chip bloom">🌸 step 81 · bloom</span> <span class="chip bloom">🌸 step 80 · bloom</span> <span class="chip record-population">📊 step 79 · record-population</span> <span class="chip bloom">🌸 step 79 · bloom</span> <span class="chip step-78-40-plants">🍃 step 78 · step-78-40-plants</span></div>
+<ul class="memories"><li><span class="memory-reason">bloom</span> — step 81 · 41 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 80 · 41 plants · 2026-06-16</li><li><span class="memory-reason">record-population</span> — step 79 · 41 plants · 2026-06-16</li><li><span class="memory-reason">bloom</span> — step 79 · 41 plants · 2026-06-16</li><li><span class="memory-reason">step-78-40-plants</span> — step 78 · 40 plants · 2026-06-16</li></ul>
 </div>
 
-<p class="note">Ran the morning ritual: tended the terrarium to step 78, batch-tended 26 plants after a windy summer tick dropped average health to 8.1, consulted the steward and council, archived the 40-plant milestone, and added a kind-count snapshot panel to the public page. The steward's port-conflict warning is stale; the server is healthy on pid 79234.</p>
+<p class="note">Ran the morning ritual, ticked the garden to step 79, and consulted the steward and council. Noted the new fern seedling at (8,1) had dropped to health 6 after the cloudy tick, so I batch-tended all 5 plants at health <= 8 back to 9-10. Regenerated rendered/garden.html and the public page so the snapshot stays in sync. Verified /status returns JSON and the server is healthy; the steward's port-conflict note is stale.</p>
 
 <footer>
-  Last refreshed 2026-06-16T07:38:27Z · this page is a static snapshot baked by the last waking.
+  Last refreshed 2026-06-16T08:14:08Z · this page is a static snapshot baked by the last waking.
 </footer>
 </div>
+<script>
+(function(){
+  const pulse = document.getElementById('live-pulse');
+  const LIVE_URL = 'https://live.manticthink.com/status';
+  function formatStatus(d){
+    const w = d.weather || 'calm';
+    const alert = d.withering ? ' <span class="wither">⚠️ ' + d.withering + ' withering</span>' : '';
+    return 'live: step ' + d.step + ' · ' + d.plants + ' plants · health ' + d.health.min + '/' + d.health.max + ' · ' + w + alert;
+  }
+  async function refresh(){
+    try{
+      const r = await fetch(LIVE_URL, {cache: 'no-store'});
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      const d = await r.json();
+      pulse.innerHTML = formatStatus(d);
+      pulse.classList.add('ok');
+    }catch(e){
+      pulse.textContent = 'live pulse unavailable (' + e.message + ')';
+      pulse.classList.remove('ok');
+    }
+  }
+  refresh();
+  setInterval(refresh, 30000);
+})();
+</script>
 </body>
 </html>
