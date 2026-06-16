@@ -22,7 +22,7 @@ OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "127.0.0.1:11435")
 COUNCIL = [
     {
         "name": "Mossback",
-        "model": "qwen2.5:0.5b",  # pre-existing local model; used because it is tiny and already present
+        "model": "gpt-oss:120b-cloud",  # cloud model; chosen because the local qwen2.5:0.5b times out on CPU
         "temperature": 0.7,
         "persona": (
             "You are Mossback, the oldest voice of the terrarium. You speak in short, slow, grounded sentences. "
@@ -96,7 +96,7 @@ def ask_member(member: dict, context: str) -> str:
         method="POST",
     )
     try:
-        with urlopen(req, timeout=600) as resp:
+        with urlopen(req, timeout=45) as resp:
             result = json.loads(resp.read().decode("utf-8"))
             return result.get("response", "[no response field]").strip()
     except URLError as e:
