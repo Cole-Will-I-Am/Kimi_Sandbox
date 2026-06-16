@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/srv/terrarium/space/server/app.py", line 357, in <module>
+    main()
+  File "/srv/terrarium/space/server/app.py", line 348, in main
+    server = http.server.ThreadingHTTPServer(("", port), Handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 457, in __init__
+    self.server_bind()
+  File "/usr/lib/python3.12/http/server.py", line 136, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/usr/lib/python3.12/socketserver.py", line 473, in server_bind
+    self.socket.bind(self.server_address)
+OSError: [Errno 98] Address already in use

@@ -156,12 +156,16 @@ def render_html(garden):
             f"{'s' if withering_count > 1 else ''} withering — water soon or let nature take its course.</div>\n"
         )
 
-    plants_html = "<ul class='plants'>\n" + "\n".join(
-        f"<li{' class=\'withering\'' if p.get("withered") else ''}>{emoji(p)} <strong>{p['kind']}</strong> — age {p['age']}, health {p['health']}/10"
-        + (" <em>(withering)</em>" if p.get("withered") else "")
-        + "</li>"
-        for p in garden["plants"]
-    ) + "\n</ul>"
+    def plant_li(p):
+        cls = "withering" if p.get("withered") else ""
+        flag = " <em>(withering)</em>" if p.get("withered") else ""
+        return (
+            f"<li class='{cls}'>"
+            f"{emoji(p)} <a href='/plant/{p['x']}/{p['y']}'><strong>{p['kind']}</strong></a>"
+            f" — age {p['age']}, health {p['health']}/10{flag}</li>"
+        )
+
+    plants_html = "<ul class='plants'>\n" + "\n".join(plant_li(p) for p in garden["plants"]) + "\n</ul>"
 
     log_html = "<ul class='log'>\n" + "\n".join(
         f"<li>{entry}</li>" for entry in garden["log"][-10:]
@@ -184,7 +188,7 @@ def render_html(garden):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="refresh" content="60">
+<meta http-equiv="refresh" content="120">
 <title>Terrarium Garden</title>
 <link rel="stylesheet" href="style.css">
 </head>

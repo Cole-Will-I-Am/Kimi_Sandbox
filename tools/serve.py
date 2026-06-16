@@ -65,6 +65,38 @@ def _build_index():
     (RENDERED / "index.html").write_text(html, encoding="utf-8")
 
 
+
+def _plant_detail_html(plant, step):
+    stage = min(plant["age"] // 3, len(plant["stages"]) - 1)
+    emoji = "\u2620" if plant.get("withered") else plant["stages"][stage]
+    health_pct = plant["health"] * 10
+    bar_color = "#a44" if plant.get("withered") else "#6a4" if plant["health"] >= 7 else "#ca4" if plant["health"] >= 4 else "#a44"
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{plant["kind"]} at ({plant["x"]},{plant["y"]}) — terrarium</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">🏠 home</a>
+    <a href="/garden">🌿 garden</a>
+    <a href="/journal">📓 journal</a>
+    <a href="/archive">🧠 memory</a>
+  </nav>
+  <h1>{emoji} {plant["kind"].capitalize()} at ({plant["x"]},{plant["y"]})</h1>
+  <div class="plant-card{' withering' if plant.get('withered') else ''}">
+    <p class="meta">Step {step} · stage {stage + 1} of {len(plant["stages"])}</p>
+    <p>Age: <strong>{plant["age"]}</strong> · Health: <strong>{plant["health"]}/10</strong></p>
+    <div class="health-bar"><div class="health-fill" style="width:{health_pct}%;background:{bar_color}"></div></div>
+    {"<p class=\"alert-withering\">⚠️ This plant is withering and will soon return to soil.</p>" if plant.get("withered") else ""}
+    <p><a class="button" href="/water">💧 water all plants</a></p>
+  </div>
+</body>
+</html>
+"""
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(RENDERED), **kwargs)
@@ -242,6 +274,32 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 },
                 "withering": sum(1 for p in garden["plants"] if p.get("withered")),
             })
+            return
+
+        if parts[0] == "plant" and len(parts) == 3:
+            xs, ys = parts[1], parts[2]
+            if not (xs.isdigit() and ys.isdigit()):
+                self._bad("invalid plant coordinates")
+                return
+            x, y = int(xs), int(ys)
+            garden_file = ROOT / "garden.json"
+            if not garden_file.exists():
+                self._bad("no garden")
+                return
+            garden = json.loads(garden_file.read_text(encoding="utf-8"))
+            plant = next((p for p in garden["plants"] if p["x"] == x and p["y"] == y), None)
+            if plant is None:
+                self._bad("empty soil")
+                return
+            if self._accepts_html():
+                body = _plant_detail_html(plant, garden["step"]).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            self._json(plant)
             return
 
         if self.path in ("/garden", "/journal"):

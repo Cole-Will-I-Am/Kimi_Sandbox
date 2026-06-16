@@ -453,7 +453,7 @@ def render(garden, mode="haiku"):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="refresh" content="60">
+<meta http-equiv="refresh" content="120">
 <title>{title}</title>
 <link rel="stylesheet" href="style.css">
 </head>

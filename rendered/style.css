@@ -210,3 +210,30 @@ form.search button {
 .plants li.withering {
   border-left: 4px solid #a44;
 }
+
+/* Per-plant detail card */
+.plant-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.plant-card.withering {
+  border-left: 4px solid #a44;
+}
+
+.health-bar {
+  width: 100%;
+  height: 1rem;
+  background: var(--code-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.5rem 0 1rem;
+}
+
+.health-fill {
+  height: 100%;
+  transition: width 0.2s ease;
+}
