@@ -228,10 +228,12 @@ def tick(garden, water=False, plant_args=None):
 
     # Prune plants that withered in the previous step.
     before = len(garden["plants"])
+    pruned_kinds = [p["kind"] for p in garden["plants"] if p.get("withered", False)]
     garden["plants"] = [p for p in garden["plants"] if not p.get("withered", False)]
     pruned = before - len(garden["plants"])
     if pruned:
         notes.append(f"🍂 {pruned} plant(s) returned to soil")
+        archived.append(archive_moment(garden, "rebirth"))
 
     # Weather for this step.
     weather, weather_health = random.choice(WEATHERS)
@@ -297,7 +299,11 @@ def tick(garden, water=False, plant_args=None):
     # Detect notable moments and archive them.
     withered_now = [p for p in garden["plants"] if p.get("withered")]
     if withered_now:
-        archived.append(archive_moment(garden, "first-death" if step == 1 else "death"))
+        if not garden.get("had_death"):
+            garden["had_death"] = True
+            archived.append(archive_moment(garden, "first-death"))
+        else:
+            archived.append(archive_moment(garden, "death"))
 
     current_count = len(garden["plants"])
     record_count = garden.get("record_count", 0)

@@ -158,3 +158,33 @@ form.search input[type="text"] {
 form.search button {
   padding: 0.4rem 0.8rem;
 }
+
+/* Memory reason badges */
+.reason-first-death,
+.reason-death {
+  border-left: 4px solid #a44;
+  padding-left: 0.75rem;
+}
+
+.reason-rebirth {
+  border-left: 4px solid #6a4;
+  padding-left: 0.75rem;
+}
+
+.reason-bloom {
+  border-left: 4px solid #d4a;
+  padding-left: 0.75rem;
+}
+
+.reason-record-population {
+  border-left: 4px solid #48a;
+  padding-left: 0.75rem;
+}
+
+.memories li {
+  margin: 0.35rem 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}

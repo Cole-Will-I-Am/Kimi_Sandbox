@@ -1,40 +1,11 @@
 {
-  "step": 37,
-  "reason": "death",
-  "saved_at": "2026-06-15T22:03:50+00:00",
-  "plants": 21,
+  "step": 49,
+  "reason": "bloom",
+  "saved_at": "2026-06-16T00:18:46+00:00",
+  "plants": 23,
   "garden": {
-    "step": 37,
+    "step": 49,
     "plants": [
-      {
-        "kind": "cactus",
-        "stages": [
-          "\u00b7",
-          "\ud83c\udf31",
-          "\ud83c\udf35",
-          "\ud83c\udf35"
-        ],
-        "age": 36,
-        "health": 0,
-        "x": 8,
-        "y": 2,
-        "withered": true
-      },
-      {
-        "kind": "tree",
-        "stages": [
-          "\u00b7",
-          "\ud83c\udf31",
-          "\ud83c\udf3f",
-          "\ud83c\udf33",
-          "\ud83c\udf33"
-        ],
-        "age": 34,
-        "health": 0,
-        "x": 6,
-        "y": 3,
-        "withered": true
-      },
       {
         "kind": "fern",
         "stages": [
@@ -44,8 +15,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf34"
         ],
-        "age": 34,
-        "health": 2,
+        "age": 46,
+        "health": 9,
         "x": 2,
         "y": 2
       },
@@ -58,8 +29,8 @@
           "\ud83c\udf3b",
           "\ud83c\udf3c"
         ],
-        "age": 33,
-        "health": 2,
+        "age": 45,
+        "health": 7,
         "x": 5,
         "y": 4
       },
@@ -72,8 +43,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf34"
         ],
-        "age": 31,
-        "health": 4,
+        "age": 43,
+        "health": 9,
         "x": 8,
         "y": 3
       },
@@ -85,8 +56,8 @@
           "\ud83c\udf35",
           "\ud83c\udf35"
         ],
-        "age": 28,
-        "health": 7,
+        "age": 40,
+        "health": 10,
         "x": 3,
         "y": 0
       },
@@ -99,8 +70,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf34"
         ],
-        "age": 27,
-        "health": 7,
+        "age": 39,
+        "health": 10,
         "x": 3,
         "y": 3
       },
@@ -113,8 +84,8 @@
           "\ud83c\udf3b",
           "\ud83c\udf3c"
         ],
-        "age": 22,
-        "health": 3,
+        "age": 34,
+        "health": 7,
         "x": 1,
         "y": 0
       },
@@ -126,8 +97,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf43"
         ],
-        "age": 22,
-        "health": 1,
+        "age": 34,
+        "health": 10,
         "x": 0,
         "y": 0
       },
@@ -139,8 +110,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf43"
         ],
-        "age": 21,
-        "health": 7,
+        "age": 33,
+        "health": 10,
         "x": 0,
         "y": 2
       },
@@ -152,8 +123,8 @@
           "\ud83c\udf35",
           "\ud83c\udf35"
         ],
-        "age": 20,
-        "health": 3,
+        "age": 32,
+        "health": 7,
         "x": 9,
         "y": 3
       },
@@ -166,8 +137,8 @@
           "\ud83c\udf3b",
           "\ud83c\udf3c"
         ],
-        "age": 20,
-        "health": 7,
+        "age": 32,
+        "health": 9,
         "x": 9,
         "y": 4
       },
@@ -180,7 +151,7 @@
           "\ud83c\udf33",
           "\ud83c\udf33"
         ],
-        "age": 18,
+        "age": 30,
         "health": 7,
         "x": 4,
         "y": 4
@@ -194,8 +165,8 @@
           "\ud83c\udf3b",
           "\ud83c\udf3c"
         ],
-        "age": 15,
-        "health": 6,
+        "age": 27,
+        "health": 10,
         "x": 2,
         "y": 4
       },
@@ -208,8 +179,8 @@
           "\ud83c\udf3b",
           "\ud83c\udf3c"
         ],
-        "age": 12,
-        "health": 4,
+        "age": 24,
+        "health": 7,
         "x": 9,
         "y": 2
       },
@@ -222,8 +193,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf34"
         ],
-        "age": 9,
-        "health": 4,
+        "age": 21,
+        "health": 10,
         "x": 3,
         "y": 1
       },
@@ -235,8 +206,8 @@
           "\ud83c\udf35",
           "\ud83c\udf35"
         ],
-        "age": 8,
-        "health": 7,
+        "age": 20,
+        "health": 8,
         "x": 6,
         "y": 2
       },
@@ -249,8 +220,8 @@
           "\ud83c\udf3f",
           "\ud83c\udf34"
         ],
-        "age": 7,
-        "health": 4,
+        "age": 19,
+        "health": 10,
         "x": 8,
         "y": 4
       },
@@ -262,8 +233,8 @@
           "\ud83c\udf35",
           "\ud83c\udf35"
         ],
-        "age": 5,
-        "health": 4,
+        "age": 17,
+        "health": 10,
         "x": 5,
         "y": 2
       },
@@ -276,8 +247,8 @@
           "\ud83c\udf33",
           "\ud83c\udf33"
         ],
-        "age": 4,
-        "health": 6,
+        "age": 16,
+        "health": 10,
         "x": 9,
         "y": 1
       },
@@ -289,9 +260,64 @@
           "\ud83c\udf3f",
           "\ud83c\udf43"
         ],
-        "age": 3,
-        "health": 6,
+        "age": 15,
+        "health": 10,
         "x": 1,
+        "y": 3
+      },
+      {
+        "kind": "flower",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf37",
+          "\ud83c\udf3b",
+          "\ud83c\udf3c"
+        ],
+        "age": 9,
+        "health": 10,
+        "x": 8,
+        "y": 2
+      },
+      {
+        "kind": "tree",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf33",
+          "\ud83c\udf33"
+        ],
+        "age": 7,
+        "health": 10,
+        "x": 0,
+        "y": 3
+      },
+      {
+        "kind": "tree",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf3f",
+          "\ud83c\udf33",
+          "\ud83c\udf33"
+        ],
+        "age": 6,
+        "health": 10,
+        "x": 8,
+        "y": 0
+      },
+      {
+        "kind": "cactus",
+        "stages": [
+          "\u00b7",
+          "\ud83c\udf31",
+          "\ud83c\udf35",
+          "\ud83c\udf35"
+        ],
+        "age": 0,
+        "health": 10,
+        "x": 2,
         "y": 3
       }
     ],
@@ -331,8 +357,20 @@
       "Step 33: 20 plants \u2014 2026-06-15T21:16:02+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf38 spring; \ud83e\udde0 archived 2 memory(ies)",
       "Step 34: 21 plants \u2014 2026-06-15T21:22:15+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2600\ufe0f summer; \ud83e\udde0 archived 2 memory(ies)",
       "Step 35: 21 plants \u2014 2026-06-15T21:33:09+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf42 autumn; \ud83e\udde0 archived 1 memory(ies)",
-      "Step 36: 21 plants \u2014 2026-06-15T21:43:59+00:00 \u2014 \ud83d\udca8 windy \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)"
+      "Step 36: 21 plants \u2014 2026-06-15T21:43:59+00:00 \u2014 \ud83d\udca8 windy \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 37: 21 plants \u2014 2026-06-15T22:03:50+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf38 spring; \ud83e\udde0 archived 2 memory(ies)",
+      "Step 38: 19 plants \u2014 2026-06-15T22:15:03+00:00 \u2014 \ud83c\udf42 2 plant(s) returned to soil; \u2600\ufe0f sunny \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 39: 19 plants \u2014 2026-06-15T22:17:18+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf42 autumn; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 40: 20 plants \u2014 2026-06-15T22:38:28+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 41: 20 plants \u2014 2026-06-15T22:49:44+00:00 \u2014 \u2600\ufe0f sunny \ud83c\udf38 spring; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 42: 21 plants \u2014 2026-06-15T23:00:46+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 43: 22 plants \u2014 2026-06-15T23:11:52+00:00 \u2014 \ud83d\udca8 windy \ud83c\udf42 autumn; \ud83e\udde0 archived 2 memory(ies)",
+      "Step 44: 22 plants \u2014 2026-06-15T23:23:08+00:00 \u2014 \ud83c\udf27\ufe0f rainy \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 45: 22 plants \u2014 2026-06-15T23:41:28+00:00 \u2014 \u2601\ufe0f cloudy \ud83c\udf38 spring; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 46: 22 plants \u2014 2026-06-15T23:53:38+00:00 \u2014 \u2601\ufe0f cloudy \u2600\ufe0f summer; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 47: 22 plants \u2014 2026-06-16T00:05:54+00:00 \u2014 \ud83c\udf27\ufe0f rainy \ud83c\udf42 autumn; \ud83e\udde0 archived 1 memory(ies)",
+      "Step 48: 22 plants \u2014 2026-06-16T00:17:25+00:00 \u2014 \u2600\ufe0f sunny \u2744\ufe0f winter; \ud83e\udde0 archived 1 memory(ies)"
     ],
-    "record_count": 21
+    "record_count": 23
   }
 }

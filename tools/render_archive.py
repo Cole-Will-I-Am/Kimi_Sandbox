@@ -84,7 +84,7 @@ def render_detail(data, all_memories):
     <a href="/oracle">🌙 oracle</a>
   </nav>
 <h1>🧠 {title}</h1>
-<p class="meta">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants</p>
+<p class="meta reason-{reason}">step {step} · {reason} · {saved_at} · {data.get('plants', 0)} plants</p>
 <p>{nav_html}</p>
 <div class="garden-bed">
 {render_grid(garden)}
@@ -112,7 +112,7 @@ def render_index(memories, query=None):
 
     if matched:
         rows = "\n".join(
-            f"<li><a href=\"/archive/{m['name']}\">{m['name']}</a> "
+            f"<li class='reason-{m.get('reason', 'memory')}'><a href=\"/archive/{m['name']}\">{m['name']}</a> "
             f"<span class='meta'>— step {m.get('step', '?')}, {m.get('reason', '')}, "
             f"{m.get('plants', 0)} plants, {m.get('saved_at', '')}</span></li>"
             for m in reversed(matched)
